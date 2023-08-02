@@ -11,6 +11,8 @@ class Building(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     color = models.CharField(max_length=7, default='')
+    class Meta:
+        verbose_name_plural = "categories"
 
     def __str__(self):
          return f"{self.name}"
@@ -36,7 +38,7 @@ class Destination(models.Model):
          return f"{self.room} Genderless"
     
 
-class Log(models.Model):
+class HallPass(models.Model):
     Time_in = models.DateTimeField(auto_now=True)
     Time_out = models.DateTimeField(blank=True, null=True)
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -44,6 +46,7 @@ class Log(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     
     class Meta:
+        verbose_name_plural = "hall passes"
         permissions = (("can_view_log_history", "can_edit_log_history"),)
 
     def __str__(self):  
@@ -52,7 +55,7 @@ class Log(models.Model):
             return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: x{self.Time_out} "
 
 class Profile(models.Model):
-    destination = models.ForeignKey(Destination, null=True, on_delete=models.SET_NULL)
+    destinations = models.ManyToManyField(Destination, blank=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
 

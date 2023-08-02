@@ -1,10 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Student, Log, Destination, Category
+from .models import Student, HallPass, Destination, Category
 from django.forms.widgets import TextInput
 from django.core.exceptions import ValidationError
 
-class CreateLogForm(forms.Form):
+class CreateHallPassForm(forms.Form):
     student = forms.CharField(max_length=6)
 
     def clean_student(self):
@@ -26,7 +26,7 @@ class CreateLogForm(forms.Form):
         return input_id
 
 #form to create choices of the destinations
-
+# this is going to be on the profile. Make this a Profile modelForm instead.
 class ChooseDestination(forms.Form):
     destinations = [] # Destination.objects.all() # This causes a migrations race condition
     d_options = []
