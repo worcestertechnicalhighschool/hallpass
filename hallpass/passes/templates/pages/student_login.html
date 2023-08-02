@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+
+{% block content  %}
+{% load static %}
+<div class = "student-input-page">
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <div class = "student-button">
+        <form action="" method="POST" autocomplete="off">
+            {% csrf_token %} 
+            {{ form }}
+            <input type = 'hidden' name='action' value='Enter'/>
+        </form>
+    </div>
+    <hr>
+    <div class = "student-logs">
+        {% if logs %}
+            <h1> {{ room }} </h1>
+
+            {% for log in logs %}
+                <div class = 'bathroom-log'>
+                    <ul> 
+                        <p>{{ log.student_id }}</p> 
+                        <p>Time In: {{ log.Time_in|date:"h:i A" }}</p>
+                        <div class ="timer-display"> 00 : 00 : 00 : 000 </div>
+                    </ul> 
+
+                    <div class = "start-time" hidden>{{ log.Time_in.isoformat }}</div>
+
+                    <form id = 'form' action="" method="POST">
+                        {% csrf_token %}
+                        <button id = 'logOut' name = 'action' value = '{{ log.id }}' >
+                            Log Out
+                        </button>
+                    </form>
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <p style = "margin: 10px;"> No logs to display for {{ room }}</p>
+        {% endif %}
+    </div>
+    
+    <script>  
+        timeRefs = document.querySelectorAll(".timer-display");
+        startTimes = document.querySelectorAll(".start-time");
+
+        setInterval(() => {       
+            for (var i = 0; i < timeRefs.length; i++) {
+                let date = new Date() - new Date(startTimes[i].innerHTML);
+                toDisplay = formatIntToStopwatch(formatDate(date)[1]) + " : " + formatIntToStopwatch(formatDate(date)[0]);
+                timeRefs[i].innerHTML = toDisplay;
+            }
+        }, 10);
+
+        function formatDate(difference) {
+            let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            return [seconds, minutes];
+        }
+
+        function formatIntToStopwatch(x, zeros = 2) {
+            digits = x.toString().length;
+            
+            if (digits >= zeros) {
+                return x.toString();
+            }
+            
+            zerosToAdd = zeros - digits;
+            return "0".repeat(zerosToAdd) + x.toString();
+        }
+    </script>
+</div>
+{% endblock %}
