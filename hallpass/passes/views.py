@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from .forms import CreateLogForm, ChooseBathroom
-from .models import Student, Log, Bathroom
+from .forms import CreateLogForm, ChooseDestination
+from .models import Student, Log, Destination
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 import datetime
@@ -9,15 +9,15 @@ import string
 
 
 @login_required
-def bathroom(request, pk):   
+def destination(request, pk):   
     form = CreateLogForm()
-    br = get_object_or_404(Bathroom, pk=pk)
+    d = get_object_or_404(Destination, pk=pk)
     logs = Log.objects.filter(Time_out = None)
 
     if request.method == 'POST':
         if request.POST['action'] == 'Enter':
             form = CreateLogForm(request.POST)
-            if len(logs.filter(bathroom = br)) < 4000:
+            if len(logs.filter(destination = d)) < 4000:
                 if form.is_valid():
                     student_id = form.cleaned_data['student']
                     student = Student.objects.filter(student_id=student_id)[0]
@@ -28,7 +28,7 @@ def bathroom(request, pk):
                     '''
                     log = Log(
                         student_id = student,
-                        bathroom = br
+                        destination = d
                     )
                     log.save()
                     form = CreateLogForm()
@@ -42,20 +42,20 @@ def bathroom(request, pk):
             logs.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
 
 
-    return render(request, 'pages/student_login.html', {'form': form, 'logs':logs.filter(bathroom = br), "room": br.room})
+    return render(request, 'pages/student_login.html', {'form': form, 'logs':logs.filter(destination = d), "room": d.room})
 
 
 @login_required
-def bathroom_selector(request):
-    form = ChooseBathroom()
+def destination_selector(request):
+    form = ChooseDestination()
     if request.method == "POST":
-        form = ChooseBathroom(request.POST)
-        br_id = form['bathrooms'].value()
-        url = reverse('bathroom', args=([br_id]))
+        form = ChooseDestination(request.POST)
+        br_id = form['destinations'].value()
+        url = reverse('destination', args=([br_id]))
         print(url)
-        return redirect(reverse('bathroom', args=([br_id])))  
+        return redirect(reverse('destination', args=([br_id])))  
         
-    return render(request, 'pages/bathroom.html',{'form': form})
+    return render(request, 'pages/destination.html',{'form': form})
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy

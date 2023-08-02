@@ -22,7 +22,7 @@ body  {
   width: auto;
 }
 
-.bathroom-log {
+.destination-log {
   display: block;
   margin: 5px;
   background-color: #2b2a4e;
@@ -30,7 +30,7 @@ body  {
   width: 300px;
 }
 
-.bathroom-log {
+.destination-log {
   display: block;
   background-color: #2b2a4e;
   opacity: 0.7;

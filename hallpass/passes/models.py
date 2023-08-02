@@ -1,14 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime, timezone
 
-class building(models.Model):
+class Building(models.Model):
     building = models.CharField(max_length=100)
 
     def __str__(self):
         return f"{self.building}"
 
-class BathroomGender(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=100)
     color = models.CharField(max_length=7, default='')
 
@@ -23,25 +23,24 @@ class Student(models.Model):
     def __str__(self):
          return f"{self.first_name} {self.last_name}, Id: {self.student_id}"
 
-class Bathroom(models.Model):
-    building = models.ForeignKey(building, null=True, on_delete=models.SET_NULL)
+class Destination(models.Model):
+    # thing = models.CharField(max_length=200, default="") # test for race condition
+    building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
     room = models.CharField(max_length=100)
-    gender = models.ForeignKey(BathroomGender, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     max_people_allowed = models.PositiveIntegerField(default = 2)
 
     def __str__(self):
-         if (self.gender):
-            return f"{self.room} {self.gender.name}"
+         if (self.category):
+            return f"{self.room} {self.category.name}"
          return f"{self.room} Genderless"
     
-import pytz
-from datetime import datetime, timezone
 
 class Log(models.Model):
     Time_in = models.DateTimeField(auto_now=True)
     Time_out = models.DateTimeField(blank=True, null=True)
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-    bathroom = models.ForeignKey(Bathroom, null=True, on_delete=models.SET_NULL)
+    destination = models.ForeignKey(Destination, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     
     class Meta:
@@ -50,12 +49,12 @@ class Log(models.Model):
     def __str__(self):  
             self.Time_in = datetime.now()
            
-            return f"Teacher: {self.user}, Bathroom: {self.bathroom}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: x{self.Time_out} "
+            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: x{self.Time_out} "
 
 class Profile(models.Model):
-    bathroom = models.ForeignKey(Bathroom, null=True, on_delete=models.SET_NULL)
+    destination = models.ForeignKey(Destination, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    building = models.ForeignKey(building, null=True, on_delete=models.SET_NULL)
+    building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.user}, {self.bathroom},"
+        return f"{self.user}, {self.building},"

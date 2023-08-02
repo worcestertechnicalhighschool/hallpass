@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, Bathroom, Log, building, Profile, BathroomGender
+from .models import Student, Destination, Log, Building, Profile, Category
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from import_export.fields import Field
@@ -8,28 +8,28 @@ admin.site.register(Student)
 
 class LogAdminResource(resources.ModelResource):
     student_id = Field(attribute = "student_id")
-    bathroom = Field(attribute = "bathroom")
+    destination = Field(attribute = "destination")
     
     class Meta:
         model = Log
         exclude = ('id',)
-        fields = ('student_id', 'bathroom', 'Time_in', 'Time_out')
+        fields = ('student_id', 'destination', 'Time_in', 'Time_out')
 
 class LogsImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = LogAdminResource
     
     readonly_fields = ("Time_in","Time_out")
-    list_filter = ('Time_in', 'Time_out', "student_id", "bathroom")
-    list_display = ('student_id', 'bathroom', 'Time_in', 'Time_out')
+    list_filter = ('Time_in', 'Time_out', "student_id", "destination")
+    list_display = ('student_id', 'destination', 'Time_in', 'Time_out')
 
 admin.site.register(Log, LogsImportExportAdmin)
 
-from .forms import BathroomGenderForm
+from .forms import CategoryForm
 
-@admin.register(BathroomGender)
-class BathroomGenderAdmin(admin.ModelAdmin):
-    form = BathroomGenderForm
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    form = CategoryForm
 
-admin.site.register(building)
+admin.site.register(Building)
 admin.site.register(Profile)
-admin.site.register(Bathroom)
+admin.site.register(Destination)

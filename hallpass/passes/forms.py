@@ -1,8 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from sign_in.models import Student, Log, Bathroom, BathroomGender
+from .models import Student, Log, Destination, Category
 from django.forms.widgets import TextInput
-
 from django.core.exceptions import ValidationError
 
 class CreateLogForm(forms.Form):
@@ -26,20 +25,21 @@ class CreateLogForm(forms.Form):
 
         return input_id
 
-#form to create choices of the bathrooms
-class ChooseBathroom(forms.Form):
-    bathrooms = Bathroom.objects.all()
-    b_options = []
-    for b in bathrooms:
-        b_options.append( (b.id, b.room) )
+#form to create choices of the destinations
 
-    bathroom_choices = tuple(b_options)
+class ChooseDestination(forms.Form):
+    destinations = [] # Destination.objects.all() # This causes a migrations race condition
+    d_options = []
+    for d in destinations:
+        d_options.append( (d.id, d.room) )
 
-    bathrooms = forms.ChoiceField(choices = bathroom_choices)
+    destination_choices = tuple(d_options)
 
-class BathroomGenderForm(ModelForm):
+    destinations = forms.ChoiceField(choices = destination_choices)
+
+class CategoryForm(ModelForm):
     class Meta:
-        model = BathroomGender
+        model = Category
         fields = '__all__'
         widgets = {
             'color': TextInput(attrs={'type': 'color'}),
