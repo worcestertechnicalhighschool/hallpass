@@ -25,11 +25,10 @@
             <ul class="sidebar-nav">
               {% if user.is_authenticated %}
                 <br>
-                <li><strong>User:</strong> {{ user.get_username }}</li>
-                <li><a href="{% url 'destination_selector' %}">Select destination</a></li>
+                <li> {{ user.get_username }} </li>
+                <li><a href="{% url 'select' %}">Select Destinations</a></li>
+                <li><a href="{% url 'monitor' %}">Monitor Destinations</a></li>
                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
-              {% else %}
-                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
               {% endif %}
 
             </ul>

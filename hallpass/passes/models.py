@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Building(models.Model):
     building = models.CharField(max_length=100)
@@ -26,7 +28,6 @@ class Student(models.Model):
          return f"{self.first_name} {self.last_name}, Id: {self.student_id}"
 
 class Destination(models.Model):
-    # thing = models.CharField(max_length=200, default="") # test for race condition
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
     room = models.CharField(max_length=100)
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
@@ -35,8 +36,7 @@ class Destination(models.Model):
     def __str__(self):
          if (self.category):
             return f"{self.room} {self.category.name}"
-         return f"{self.room} Genderless"
-    
+         return f"{self.room} Genderless" 
 
 class HallPass(models.Model):
     Time_in = models.DateTimeField(auto_now=True)
@@ -56,8 +56,17 @@ class HallPass(models.Model):
 
 class Profile(models.Model):
     destinations = models.ManyToManyField(Destination, blank=True)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.user}, {self.building},"
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

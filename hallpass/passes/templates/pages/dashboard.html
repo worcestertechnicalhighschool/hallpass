@@ -1,9 +1,11 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+    <h1> Select Destinations </h1>
+
     <form action="" method="post">
         {% csrf_token %}
         {{ form }}
-        <button>Submit</button>
+        <button type="submit">Save changes</button>
     </form>
 {% endblock %}
