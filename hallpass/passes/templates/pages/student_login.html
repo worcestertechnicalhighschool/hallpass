@@ -5,41 +5,53 @@
 <div class = "student-input-page">
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
     <div class = "student-button">
+        <h1> {{ profile.building }} </h1>
+
         <form action="" method="POST" autocomplete="off">
             {% csrf_token %} 
             {{ form }}
-            <input type = 'hidden' name='action' value='Enter'/>
+            
+            {% for destination in destinations %}
+            <button name='action' value='Enter {{ destination.id }}'>{{ destination }}</button>
+            {% endfor %}
         </form>
     </div>
     <hr>
-    <div class = "student-logs">
-        {% if logs %}
-            <h1> {{ room }} </h1>
 
-            {% for log in logs %}
-                <div class = 'destination-log'>
-                    <ul> 
-                        <p>{{ log.student_id }}</p> 
-                        <p>Time In: {{ log.Time_in|date:"h:i A" }}</p>
-                        <div class ="timer-display"> 00 : 00 : 00 : 000 </div>
-                    </ul> 
+    <div class="destinations">
+    {% if destinations %}
+        {% for destination in destinations %}
+        <div class = "student-logs">
+            <h1> {{ destination.room }} </h1>
+            <p><strong> {{ destination.category }} </strong></p>
 
-                    <div class = "start-time" hidden>{{ log.Time_in.isoformat }}</div>
+            {% for log in destination.hallpass_set.all %}
+                {% if not log.Time_out %}
+                    <div class = 'destination-log'>
+                        <ul> 
+                            <p>{{ log.student_id }}</p> 
+                            <p>Time In: {{ log.Time_in|date:"h:i A" }}</p>
+                            <div class ="timer-display"> 00 : 00 : 00 : 000 </div>
+                        </ul> 
 
-                    <form id = 'form' action="" method="POST">
-                        {% csrf_token %}
-                        <button id = 'logOut' name = 'action' value = '{{ log.id }}' >
-                            Log Out
-                        </button>
-                    </form>
-                </div>
+                        <div class = "start-time" hidden>{{ log.Time_in.isoformat }}</div>
+
+                        <form id = 'form' action="" method="POST">
+                            {% csrf_token %}
+                            <button id = 'logOut' name = 'action' value = 'Out {{ log.id }}' >
+                                Log Out
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
             {% endfor %}
-
-        {% else %}
-            <p style = "margin: 10px;"> No logs to display for {{ room }}</p>
-        {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p> No Destinations Selected</p>
+    {% endif %}
     </div>
-    
+
     <script>  
         timeRefs = document.querySelectorAll(".timer-display");
         startTimes = document.querySelectorAll(".start-time");
