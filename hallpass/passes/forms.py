@@ -25,18 +25,6 @@ class CreateHallPassForm(forms.Form):
 
         return input_id
 
-# form to create choices of the destinations
-# this is going to be on the profile. Make this a Profile modelForm instead.
-class ChooseDestination(forms.Form):
-    destinations = [] # Destination.objects.all() # This causes a migrations race condition
-    d_options = []
-    for d in destinations:
-        d_options.append( (d.id, d.room) )
-
-    destination_choices = tuple(d_options)
-
-    destinations = forms.ChoiceField(choices = destination_choices)
-
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
