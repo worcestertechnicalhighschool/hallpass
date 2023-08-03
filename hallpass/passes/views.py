@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import permission_required
 import datetime
 import string
 
+'''
 @login_required
-def monitor_destinations(request, pk):   
+def monitor_destinations_old(request, pk):   
     form = CreateHallPassForm()
     d = get_object_or_404(Destination, pk=pk)
     hallpasses = HallPass.objects.filter(Time_out = None)
@@ -41,7 +42,38 @@ def monitor_destinations(request, pk):
             hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
 
 
-    return render(request, 'pages/student_login.html', {'form': form, 'hallpasses':hallpasses.filter(destination = d), "room": d.room})
+    return render(request, 'pages/student_login_old.html', {'form': form, 'hallpasses':hallpasses.filter(destination = d), "room": d.room})
+'''
+
+@login_required
+def monitor_destinations(request):
+    form = CreateHallPassForm()
+    user_profile = request.user.profile
+    user_destinations = user_profile.destinations.all()
+    hallpasses = HallPass.objects.filter(Time_out = None)
+
+    if request.method == 'POST':
+        if 'Enter' in request.POST['action']:
+            form = CreateHallPassForm(request.POST)
+            if form.is_valid(): 
+                student_id = form.cleaned_data['student']
+                student = Student.objects.filter(student_id=student_id)[0]
+                d = Destination.objects.get(id = request.POST['action'].split(" ")[1])
+                
+                hallpass = HallPass(
+                    student_id = student,
+                    destination = d
+                )
+
+                hallpass.save()
+                form = CreateHallPassForm()
+        elif 'Out' in request.POST['action']:
+            log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
+            student_logout_id = log_to_modify.student_id.student_id
+
+            hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
+
+    return render(request, 'pages/student_login.html', {'form': form, 'profile': user_profile, 'destinations': user_destinations })
 
 @login_required
 def select_destinations(request):
@@ -49,6 +81,12 @@ def select_destinations(request):
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
         if profile_form.is_valid():
             profile_form.save()
+
+            form = CreateHallPassForm()
+            user_profile = request.user.profile
+            user_destinations = user_profile.destinations.all()
+
+            return redirect(reverse('monitor'))
     else:
         profile_form = ProfileForm(instance=request.user.profile)
 
