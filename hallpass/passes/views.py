@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from .forms import CreateHallPassForm, ChooseDestination
+from .forms import CreateHallPassForm, ChooseDestination, ProfileForm
 from .models import Student, HallPass, Destination
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -47,7 +47,7 @@ def destination(request, pk):
 
 @login_required
 def destination_selector(request):
-    form = ChooseDestination()
+    form = ProfileForm()
     if request.method == "POST":
         form = ChooseDestination(request.POST)
         br_id = form['destinations'].value()
@@ -56,6 +56,20 @@ def destination_selector(request):
         return redirect(reverse('destination', args=([br_id])))  
         
     return render(request, 'pages/destination.html',{'form': form})
+
+@login_required
+def dashboard(request):
+    form = ProfileForm()
+    if request.method == "POST":
+        form = ProfileForm(request.POST)
+        if(form.is_valid):
+            form.save()
+            # destinations = form.cleaned_data['destinations']
+    
+    return render(request, 'pages/dashboard.html', {"form":form})
+
+
+
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy

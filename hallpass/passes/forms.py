@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Student, HallPass, Destination, Category
+from .models import Student, HallPass, Destination, Category, Profile
 from django.forms.widgets import TextInput
 from django.core.exceptions import ValidationError
 
@@ -25,7 +25,7 @@ class CreateHallPassForm(forms.Form):
 
         return input_id
 
-#form to create choices of the destinations
+# form to create choices of the destinations
 # this is going to be on the profile. Make this a Profile modelForm instead.
 class ChooseDestination(forms.Form):
     destinations = [] # Destination.objects.all() # This causes a migrations race condition
@@ -37,10 +37,16 @@ class ChooseDestination(forms.Form):
 
     destinations = forms.ChoiceField(choices = destination_choices)
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('destinations',)
+
 class CategoryForm(ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
         widgets = {
+            # I think this is redundant
             'color': TextInput(attrs={'type': 'color'}),
         }
