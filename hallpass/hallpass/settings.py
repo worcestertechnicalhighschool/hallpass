@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'passes.apps.PassesConfig',
     'import_export',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
