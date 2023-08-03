@@ -17,9 +17,10 @@
         {% endif %}
     {% endif %}
 
-    <form action="/url/to/submit/" method="post" class="form">
+    <form action="{% url 'login' %}" method="post" class="form">
         {% csrf_token %}
         {% bootstrap_form form %}
+        <input type='hidden' name='next' value='{{ next }}'>
         {% buttons %}
           <button type="submit" class="btn btn-primary">
             Submit
