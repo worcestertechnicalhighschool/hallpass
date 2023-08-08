@@ -1,0 +1,9 @@
+{% extends 'email/base.txt' %}
+{% block body %}
+From:
+{{ message.name }}, {{ message.email }}
+
+Message:
+{{ message.message }}
+
+{% endblock body %}
