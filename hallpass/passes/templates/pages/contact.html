@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %}Contact{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <h2>Contact Us</h2>
+    </div>
+    <div class="row">
+        <form action="" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                Submit
+            </button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}
