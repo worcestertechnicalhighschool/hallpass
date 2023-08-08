@@ -26,9 +26,17 @@ class CreateHallPassForm(forms.Form):
         return input_id
 
 class ProfileForm(forms.ModelForm):
+    destinations_choices = None
+    destinations = forms.ModelMultipleChoiceField(label='Select Destination', queryset=destinations_choices, required=True)  
+
     class Meta:
         model = Profile
         fields = ('destinations',)
+    
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.destinations_choices = Destination.objects.filter(building = self.instance.building)
+        self.fields['destinations'].queryset = self.destinations_choices
 
 class CategoryForm(ModelForm):
     class Meta:
