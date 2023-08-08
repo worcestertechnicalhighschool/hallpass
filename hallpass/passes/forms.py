@@ -27,12 +27,12 @@ class CreateHallPassForm(forms.Form):
 
 class ProfileForm(forms.ModelForm):
     destinations_choices = None
-    destinations = forms.ModelMultipleChoiceField(label='Select Destination', queryset=destinations_choices, required=True)  
+    destinations = forms.ModelMultipleChoiceField(label='Select Destination', queryset=destinations_choices, required=False)  
 
     class Meta:
         model = Profile
-        fields = ('destinations',)
-    
+        fields = ('destinations', 'building')
+
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.destinations_choices = Destination.objects.filter(building = self.instance.building)
@@ -43,6 +43,5 @@ class CategoryForm(ModelForm):
         model = Category
         fields = '__all__'
         widgets = {
-            # I think this is redundant
             'color': TextInput(attrs={'type': 'color'}),
         }
