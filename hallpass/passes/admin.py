@@ -4,7 +4,10 @@ from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from import_export.fields import Field
 
-admin.site.register(Student)
+class StudentImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'student_id')
+
+admin.site.register(Student, StudentImportExportAdmin)
 
 class HallPassAdminResource(resources.ModelResource):
     student_id = Field(attribute = "student_id")
@@ -12,14 +15,14 @@ class HallPassAdminResource(resources.ModelResource):
     
     class Meta:
         model = HallPass
-        exclude = ('id',)
+        exclude = ("id",)
         fields = ('student_id', 'destination', 'Time_in', 'Time_out')
 
 class HallPassImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = HallPassAdminResource
     
     readonly_fields = ("Time_in","Time_out")
-    list_filter = ('Time_in', 'Time_out', "student_id", "destination")
+    list_filter = ('Time_in', 'Time_out', "student_id", "destination", "building")
     list_display = ('student_id', 'destination', 'Time_in', 'Time_out')
 
 admin.site.register(HallPass, HallPassImportExportAdmin)
