@@ -12,16 +12,15 @@
     {% bootstrap_javascript %}
     <!-- Add additional CSS in static file -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
   </head>
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-2">
           {% block sidebar %}
-            <h1 class="brand">Lavalytics</h1>
-
-            <ul class="sidebar-nav">
+            <h1 class="brand">Hallpass</h1>
+            <ul  class="list-unstyled">
+             
               {% if user.is_authenticated %}
                 <br>
                 <li> {{ user.get_username }} </li>
