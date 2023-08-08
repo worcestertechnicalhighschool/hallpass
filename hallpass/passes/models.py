@@ -43,6 +43,7 @@ class HallPass(models.Model):
     Time_out = models.DateTimeField(blank=True, null=True)
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     destination = models.ForeignKey(Destination, null=True, on_delete=models.SET_NULL)
+    building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     
     class Meta:

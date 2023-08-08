@@ -45,3 +45,9 @@ class CategoryForm(ModelForm):
         widgets = {
             'color': TextInput(attrs={'type': 'color'}),
         }
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=128)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea())
+
