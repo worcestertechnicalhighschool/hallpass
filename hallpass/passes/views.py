@@ -28,7 +28,8 @@ def monitor_destinations(request):
                 
                 hallpass = HallPass(
                     student_id = student,
-                    destination = d
+                    destination = d,
+                    building = d.building
                 )
 
                 hallpass.save()
