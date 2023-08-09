@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'passes.apps.PassesConfig',
     'import_export',
     'bootstrap5',
+    'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -117,8 +118,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / 'static'
+
+SASS_PROCESSOR_ROOT = STATIC_ROOT
+SASS_PRECISION = 8
+SASS_PROCESSOR_STORAGE = 'django.contrib.staticfiles.storage.FileSystemStorage'
+SASS_PROCESSOR_STORAGE_OPTIONS = {
+    'location': STATIC_ROOT,
+    'base_url': STATIC_URL,
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
