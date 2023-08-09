@@ -26,6 +26,7 @@ class CreateHallPassForm(forms.Form):
         student_query = Student.objects.filter(student_id=input_id)
         if len(student_query) <= 0:
             validate += "Must be a valid student ID"
+            raise ValidationError(validate.split("/b"))
 
         if student_query[0].building != self.request.user.profile.building:
             validate += "Student must belong to current building"
