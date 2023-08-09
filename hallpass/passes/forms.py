@@ -38,7 +38,7 @@ class CreateHallPassForm(forms.Form):
 
 class ProfileForm(forms.ModelForm):
     destinations_choices = None
-    destinations = forms.ModelMultipleChoiceField(label='Select Destination', queryset=destinations_choices, required=False)  
+    destinations = forms.ModelMultipleChoiceField(label='Select Destination', queryset=destinations_choices, required=False, widget=forms.CheckboxSelectMultiple)  
 
     class Meta:
         model = Profile
