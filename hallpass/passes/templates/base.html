@@ -10,7 +10,8 @@
     {% bootstrap_javascript %}
     <!-- Add additional CSS in static file -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% load sass_tags %}
+    <link rel="stylesheet" href="{% sass_src 'scss/style.scss' %}">
   </head>
   <body>
     <header class="container-fluid">

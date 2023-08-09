@@ -1,0 +1,12 @@
+.student-logs {
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    display: inline-flex;
+   
+    /* padding: 0px 90px ; 
+    /* min-height: 1000px;*/
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+  
+  }
+  
