@@ -4,19 +4,21 @@ from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from import_export.fields import Field
 
+class StudentResource(resources.ModelResource):
+    class Meta:
+        model = Student
+        fields = ('id', 'first_name', 'last_name', 'student_id', 'building__building')
+
 class StudentImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'student_id')
+    resource_class = StudentResource
+    list_display = ('first_name', 'last_name', 'student_id', 'building')
 
 admin.site.register(Student, StudentImportExportAdmin)
 
 class HallPassAdminResource(resources.ModelResource):
-    student_id = Field(attribute = "student_id")
-    destination = Field(attribute = "destination")
-    
     class Meta:
         model = HallPass
-        exclude = ("id",)
-        fields = ('student_id', 'destination', 'Time_in', 'Time_out')
+        fields = ('id', 'student_id__student_id', 'destination__room', 'Time_in', 'Time_out')
 
 class HallPassImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = HallPassAdminResource

@@ -10,9 +10,9 @@ from django.views.decorators.http import require_http_methods
 
 @login_required
 def monitor_destinations(request):
-    form = CreateHallPassForm()
     user_profile = request.user.profile
     user_destinations = user_profile.destinations.filter(building = user_profile.building)
+    form = CreateHallPassForm(request = request)
 
     if not user_destinations:
         return redirect(reverse('select'))
@@ -21,7 +21,7 @@ def monitor_destinations(request):
 
     if request.method == 'POST':
         if 'Enter' in request.POST['action']:
-            form = CreateHallPassForm(request.POST)
+            form = CreateHallPassForm(request.POST, request = request)
             if form.is_valid(): 
                 student_id = form.cleaned_data['student']
                 student = Student.objects.filter(student_id=student_id)[0]
@@ -34,7 +34,7 @@ def monitor_destinations(request):
                 )
 
                 hallpass.save()
-                form = CreateHallPassForm()
+
         elif 'Out' in request.POST['action']:
             log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
             student_logout_id = log_to_modify.student_id.student_id
@@ -51,7 +51,7 @@ def select_destinations(request):
         if profile_form.is_valid():
             profile_form.save()
 
-            form = CreateHallPassForm()
+            form = CreateHallPassForm(request = request)
             user_profile = request.user.profile
             user_destinations = user_profile.destinations.all()
 
