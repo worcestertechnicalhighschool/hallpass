@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Hallpass{% endblock %}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
+    {% load bootstrap5 %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
     <!-- Add additional CSS in static file -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
   </head>
   <body>
-    <div class="container-fluid">
-      {% block content %}{% endblock %}
-    </div>
+    <header class="container-fluid">
+        <nav class="navbar">
+          <h1 class="brand">Hallpass</h1>
+          {% if request.user.is_authenticated %} 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto flex-nowrap">
+                <li class="nav-item">
+                  <a class="nav-link " aria-current="page" href="{% url 'select' %}">Select Destinations</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'monitor' %}">Monitor Destinations</a>                      
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>                      
+                </li>
+                {% if request.user.is_staff %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>                      
+                </li>
+                {% endif %}
+              </ul>
+            </div><!-- ./navbar-collapse-->
+          {% endif %}
+        </nav> 
+      </header>
+      <main class="container-fluid">
+        <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
+      </main>     
+      <footer class="footer d-flex justify-content-between p-3 container-fluid">
+        <p>&copy; {% now 'Y' %} HallPass.tech</p>
+        <nav class="nav">
+          <a href="{% url 'help' %}" class="nav-link">Need Help?</a>
+          <a href="{% url 'contact' %}" class="nav-link">Contact Us</a>
+          <a href="{% url 'privacy' %}" class="nav-link">Privacy Policy</a>
+          <a href="{% url 'terms' %}" class="nav-link">Terms of Use</a>
+        </nav>
+    </footer>
   </body>
 </html>
