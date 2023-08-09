@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% block title %}
-      <title>LILO</title>
-    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
@@ -13,12 +11,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-2">
-         
-        </div>
-        <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
-      </div>
+      {% block content %}{% endblock %}
     </div>
   </body>
 </html>
