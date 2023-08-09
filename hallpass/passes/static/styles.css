@@ -11,15 +11,20 @@
 }
 
 
-
+*/
 .student-logs {
-  flex-wrap: wrap;
-  min-height: 1000px;
-  height: auto;
-  width: auto;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  display: inline-flex;
+ 
+  /* padding: 0px 90px ; 
+  /* min-height: 1000px;*/
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+
 }
 
-.destination-log {
+/* .destination-log {
   display: block;
   margin: 5px;
   background-color: #2b2a4e;
@@ -30,26 +35,32 @@
   opacity: 0.7;
   float:right;
 }
- */
-/* .student-button {
+  */
+.student-button {
   display: flex;
-  background-color: #4a497a;
+  /* background-color: #4a497a; */
   flex-direction: column;
-  width: 30%;
-  box-shadow: inset 20px 0px #343457;
-  justify-content: flex-start;
+  width: 50%;
+  margin:auto;
+  /* justify-content: flex-start; */
   align-items: center;
 
-  padding: 50px 0px 0px 0px;
-} */
+  padding: 50px 0px 10px 0px;
 
+  /* border-bottom: 1px solid #888; */
+} 
+
+.hr{
+    margin: 30px -300px 10px;
+    border: 0;
+    border-top: 1px solid #000000;
+}
 /* h1 {
   color:#1a1a39;
   text-align: center;
   font-family:yellowtail ;
 } */
 
-/* .student-input-page {
-  display: flex;
-  height: 100%;
-} */
+.container{
+  position: absolute;
+}
