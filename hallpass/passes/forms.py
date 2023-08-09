@@ -6,19 +6,29 @@ from django.core.exceptions import ValidationError
 
 class CreateHallPassForm(forms.Form):
     student = forms.CharField(max_length=6)
+    building = None
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(CreateHallPassForm, self).__init__(*args, **kwargs)
 
     def clean_student(self):
         input_id = self.cleaned_data["student"]
         id_length = len(input_id)
         validate = ''
+
         if id_length != 6:
             validate += "must be 6 numbers /b"
             
         if not input_id.isnumeric():
             validate += "Student Id's don't contain letters /b"
             
-        if len(Student.objects.filter(student_id=input_id)) <= 0:
+        student_query = Student.objects.filter(student_id=input_id)
+        if len(student_query) <= 0:
             validate += "Must be a valid student ID"
+
+        if student_query[0].building != self.request.user.profile.building:
+            validate += "Student must belong to current building"
             
         if (validate != ''):
             raise ValidationError(validate.split("/b"))
