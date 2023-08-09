@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 django-import-export = "*"
 django-bootstrap-v5 = "*"
+django-sass-processor = "*"
+libsass = "*"
 
 [dev-packages]
 
