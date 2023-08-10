@@ -4,6 +4,7 @@
     <title>{% block title %}Hallpass{% endblock %}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="https://fav.farm/🛂" />
     {% load bootstrap5 %}
     {# Load CSS and JavaScript #}
     {% bootstrap_css %}
@@ -55,5 +56,6 @@
           <a href="{% url 'terms' %}" class="nav-link">Terms of Use</a>
         </nav>
     </footer>
+    {% block scripts %}{% endblock %}
   </body>
 </html>

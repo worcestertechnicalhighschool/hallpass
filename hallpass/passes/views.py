@@ -44,7 +44,7 @@ def monitor_destinations(request):
     return render(request, 'pages/student_login.html', {'form': form, 'profile': user_profile, 'destinations': user_destinations })
 
 @login_required
-def select_destinations(request):
+def dashboard(request):
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
 

@@ -35,19 +35,27 @@ class CreateHallPassForm(forms.Form):
             raise ValidationError(validate.split("/b"))
 
         return input_id
-
+    
 class ProfileForm(forms.ModelForm):
     destinations_choices = None
-    destinations = forms.ModelMultipleChoiceField(label='Select Destination', queryset=destinations_choices, required=False, widget=forms.CheckboxSelectMultiple)  
+    destinations = forms.ModelMultipleChoiceField(
+        label='Destinations', 
+        queryset=destinations_choices, 
+        required=False, 
+        widget=forms.CheckboxSelectMultiple()
+    )
+    destinations.widget.template_name = 'widgets/destination_choices.html'
 
     class Meta:
         model = Profile
-        fields = ('destinations', 'building')
+        fields = ('building','destinations',)
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.destinations_choices = Destination.objects.filter(building = self.instance.building)
         self.fields['destinations'].queryset = self.destinations_choices
+        self.fields['building'].label="Buildings"
+
 
 class CategoryForm(ModelForm):
     class Meta:
@@ -61,4 +69,3 @@ class ContactForm(forms.Form):
     name = forms.CharField(max_length=128)
     email = forms.EmailField()
     message = forms.CharField(widget=forms.Textarea())
-
