@@ -3,6 +3,8 @@
 
 {% block content  %}
 {% load static %}
+
+<div class="center">
 <div class = "student-input-page">
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
     <div class = "student-button">
@@ -26,6 +28,7 @@
         <div class = "col" style="background-color: {{ destination.category.color }}">
             <h1> {{ destination.room }} {{ destination.category }} </h1> <br>
 
+            <div class="col-content">
             {% for log in destination.hallpass_set.all %}
                 {% if not log.Time_out %}
                     <div class = 'destination-log'>
@@ -48,12 +51,15 @@
                 {% endif %}
             {% endfor %}
         </div>
+        </div>
+
         {% endfor %}
     {% else %}
         <p> No Destinations Selected</p>
     {% endif %}
     </div>
     </div>
+</div>
     <script>  
         timeRefs = document.querySelectorAll(".timer-display");
         startTimes = document.querySelectorAll(".start-time");
