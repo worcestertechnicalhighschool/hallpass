@@ -10,6 +10,7 @@
         <fieldset class="form-group">
           <legend>Change Buildings</legend>
           {% bootstrap_form form layout="horizontal" exclude="destinations" %}
+          <input type="hidden" name="next" value="{{ next }}" >
           <button type="submit" class="btn btn-primary">
             Change Buildings
           </button>

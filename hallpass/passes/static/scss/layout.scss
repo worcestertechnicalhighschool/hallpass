@@ -12,6 +12,7 @@ body {
 }
 
 .student-button {
+    margin-top: 20px;
     text-align: center;
     background-color: rgb(112, 119, 151);
     border-radius: $edge-rounding;
@@ -20,6 +21,15 @@ body {
     box-shadow: $drop-shadow;
 
     border: 2px solid rgb(230, 218, 218);
+    
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+    max-width: 900px;
+    overflow-x: auto;
+    margin-bottom: 100px;
 }
 
 .col {
@@ -34,16 +44,16 @@ body {
     flex-direction: column;
     box-shadow: $drop-shadow;
 
-    border: 2px solid rgb(230, 218, 218);
     padding: 15px;
 }
 
 .col-content {    
+    margin-top: 30px;
+
     height: 550px;
 	width: 350px;
     
     overflow-y: auto;
-    overflow-x: auto;
 }
 
 .destination-log {
@@ -61,4 +71,20 @@ body {
     position: fixed;
     bottom: 0px;
     background-color: $navbar-color;
+}
+
+.student-login-button {
+    border-radius: $edge-rounding;
+    border-width: 5px;
+    border-color: inherit;
+    padding: 10px;
+
+    margin: -16px;
+    min-height: 150px;
+
+    transition: background-color 0.3s;
+}
+.student-login-button:hover{
+    background-color: rgb(181, 181, 181);
+    color: $pass-font-color;
 }
