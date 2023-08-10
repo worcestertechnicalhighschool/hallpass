@@ -5,7 +5,7 @@ from django.forms.widgets import TextInput
 from django.core.exceptions import ValidationError
 
 class CreateHallPassForm(forms.Form):
-    student = forms.CharField(max_length=6, label="")
+    student = forms.CharField(max_length=6)
     building = None
 
     def __init__(self, *args, **kwargs):

@@ -21,6 +21,10 @@ body {
     box-shadow: $drop-shadow;
 
     border: 2px solid rgb(230, 218, 218);
+
+    label {
+        display: none;
+    }
     
 }
 
