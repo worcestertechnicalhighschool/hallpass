@@ -5,15 +5,23 @@
     <h1> Select Destinations </h1>
 
     <div class = "col-sm-6">
-    <form action="" method="post">
+    <form action="" method="post" id="destination-form">
         {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type='hidden' name='next' value='{{ next }}' >
-        {% buttons %}
+        <fieldset class="form-group">
+          <legend>Change Buildings</legend>
+          {% bootstrap_form form layout="horizontal" exclude="destinations" %}
           <button type="submit" class="btn btn-primary">
-            Submit
+            Change Buildings
           </button>
-        {% endbuttons %}
+        </fieldset>
+        
+        <fieldset class="form-group">
+          <legend>Change Destinations</legend>
+        {% bootstrap_form form exclude="building" %}
+        <button type="submit" class="btn btn-primary">
+          Change Destinations
+        </button>
+        </fieldset>
       </form>
     </div>
 {% endblock %}
