@@ -10,13 +10,9 @@
     <div class = "student-button">
         <h1> {{ profile.building }} </h1>
 
-        <form action="" method="POST" autocomplete="off">
+        <form id="student-field" action="" method="POST" autocomplete="off">
             {% csrf_token %} 
             {{ form }}
-            
-            {% for destination in destinations %}
-            <button name='action' value='Enter {{ destination.id }}'>{{ destination }}</button>
-            {% endfor %}
         </form>
     </div>
     <!-- <hr class = "hr"/> -->
@@ -26,7 +22,7 @@
     {% if destinations %}
         {% for destination in destinations %}
         <div class = "col" style="background-color: {{ destination.category.color }}">
-            <h1> {{ destination.room }} {{ destination.category }} </h1> <br>
+            <button name='action' value='Enter {{ destination.id }}' form ='student-field'>{{ destination }} </button>
 
             <div class="col-content">
             {% for log in destination.hallpass_set.all %}
