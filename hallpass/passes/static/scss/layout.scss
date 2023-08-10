@@ -1,0 +1,64 @@
+h1 {
+    color: $header-font-color;
+}
+
+body {
+    background-color: $body-color;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.student-button {
+    text-align: center;
+    background-color: rgb(112, 119, 151);
+    border-radius: $edge-rounding;
+
+    padding: 50px;
+    box-shadow: $drop-shadow;
+
+    border: 2px solid rgb(230, 218, 218);
+}
+
+.col {
+    margin: 10px;
+
+    border-radius: $edge-rounding;
+
+    height: 600px;
+	width: 400px;
+
+    display: flex;
+    flex-direction: column;
+    box-shadow: $drop-shadow;
+
+    border: 2px solid rgb(230, 218, 218);
+    padding: 15px;
+}
+
+.col-content {    
+    height: 550px;
+	width: 350px;
+    
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.destination-log {
+    background-color: $pass-bg-color;
+    color: $pass-font-color;
+    padding: 10px;
+    margin: 10px;
+
+    border: 2px solid rgb(230, 218, 218);
+    border-radius: $edge-rounding;
+    box-shadow: $drop-shadow;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    background-color: $navbar-color;
+}
