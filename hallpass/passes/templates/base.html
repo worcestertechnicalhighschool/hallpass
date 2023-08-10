@@ -14,8 +14,9 @@
     <link rel="stylesheet" href="{% sass_src 'scss/style.scss' %}">
   </head>
   <body>
-    <header class="container-fluid">
-        <nav class="navbar">
+   
+        <nav class="navbar  navbar-light bg-light"> 
+          <header class="container-fluid">
           <h1 class="brand">Hallpass</h1>
           {% if request.user.is_authenticated %} 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
