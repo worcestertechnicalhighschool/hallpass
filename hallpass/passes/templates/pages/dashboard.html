@@ -4,11 +4,11 @@
 {% block content %}
     <h1> Select Destinations </h1>
 
-    <div class = "col-sm-6">
+    <div class="col-sm-6">
     <form action="" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        <input type='hidden' name='next' value='{{ next }}' >
+        <input type="hidden" name="next" value="{{ next }}" >
         {% buttons %}
           <button type="submit" class="btn btn-primary">
             Submit

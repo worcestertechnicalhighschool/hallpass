@@ -5,14 +5,14 @@
 {% load static %}
 
 <div class="center">
-<div class = "student-input-page">
+<div class="student-input-page">
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
-    <div class = "student-button">
+    <div class="student-button">
         <h1> {{ profile.building }} </h1>
 
         <form id="student-field" action="" method="POST" autocomplete="off">
             {% csrf_token %} 
-            {{ form }}
+            {% bootstrap_form form %}
         </form>
     </div>
     <!-- <hr class = "hr"/> -->
@@ -21,26 +21,28 @@
     <div class="row align-items-center">
     {% if destinations %}
         {% for destination in destinations %}
-        <div class = "col" style="background-color: {{ destination.category.color }}">
-            <button name='action' value='Enter {{ destination.id }}' form ='student-field'>{{ destination }} </button>
+        <div class = "col" style="background-color: {{ destination.category.color }}; border-color: {{ destination.category.color }}">
+            <button name="action" value="Enter {{ destination.id }}" form="student-field" class="student-login-button"><h1>{{ destination }}</h1></button>
 
             <div class="col-content">
             {% for log in destination.hallpass_set.all %}
                 {% if not log.Time_out %}
-                    <div class = 'destination-log'>
+                    <div class="destination-log">
                         <ul> 
                             <p>{{ log.student_id }}</p> 
                             <p>Time In: {{ log.Time_in|date:"h:i A" }}</p>
-                            <div class ="timer-display"> 00 : 00 : 00 : 000 </div>
+                            <div class="timer-display"> 00 : 00 : 00 : 000 </div>
                         </ul> 
 
-                        <div class = "start-time" hidden>{{ log.Time_in.isoformat }}</div>
+                        <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
 
-                        <form id = 'form' action="" method="POST">
+                        <form id="form" action="" method="POST">
                             {% csrf_token %}
-                            <button id = 'logOut' name = 'action' value = 'Out {{ log.id }}' >
+                            {% buttons %}
+                            <button class="btn btn-secondary" id="logOut" name="action" value ="Out {{ log.id }}" >
                                 Log Out
                             </button>
+                            {% endbuttons %}
                         </form>
                     </div>
             
