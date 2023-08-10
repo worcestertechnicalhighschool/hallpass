@@ -23,9 +23,8 @@
     <div class="row align-items-center">
     {% if destinations %}
         {% for destination in destinations %}
-        <div class = "col">
-            <h1> {{ destination.room }} </h1> <br>
-            <p><strong> {{ destination.category }} </strong></p>
+        <div class = "col" style="background-color: {{ destination.category.color }}">
+            <h1> {{ destination.room }} {{ destination.category }} </h1> <br>
 
             {% for log in destination.hallpass_set.all %}
                 {% if not log.Time_out %}
