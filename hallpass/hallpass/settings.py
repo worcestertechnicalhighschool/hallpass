@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,13 +21,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g&(w-+ptt5rcp#6b%w8=*2)d%0e*93cae*^7tbw^tqmzfo@^(n'
+
+envget = os.environ.get('SECRET_KEY')
+SECRET_KEY = envget if envget else 'django-insecure-g&(w-+ptt5rcp#6b%w8=*2)d%0e*93cae*^7tbw^tqmzfo@^(n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not bool(os.environ.get('PRODUCTION'))
 
-ALLOWED_HOSTS = []
+# Raise warning if no secret key on production server
+if not bool(envget) and not DEBUG:
+    raise Exception("SECRET_KEY environment variable not defined in production!")
 
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "www.hallpass.tech",
+]
+
+SITE_ID = 1
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
@@ -45,6 +59,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # Static Files Middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,12 +93,24 @@ WSGI_APPLICATION = 'hallpass.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    }
+
+# Do not enable this in a development environment. Chrome will cache the redirect and force HTTPS redirects even when this is disabled.
+# If you are a poor soul who is being harassed by Chrome and HSTS SSL,
+# go to chrome://net-internals/#hsts and delete 127.0.0.1:8000, open the inspector on the website, and right click on the reload icon
+# and select the Empty Cache and Hard Reload option. 
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_HSTS_SECONDS = 0 if DEBUG else 60 ** 2
 
 
 # Password validation
@@ -118,6 +146,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -135,6 +165,19 @@ SASS_PROCESSOR_STORAGE_OPTIONS = {
     'location': STATIC_ROOT,
     'base_url': STATIC_URL,
 }
+
+# Email Configuration
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    # These two should DEFINITELY be defined in production
+    EMAIL_HOST_USER = os.environ['email']
+    EMAIL_HOST_PASSWORD = os.environ['email_password']
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = 'default from email'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
