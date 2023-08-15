@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "www.hallpass.tech",
+    "https://hallpass-6e6846d74cd1.herokuapp.com/"
 ]
 
 SITE_ID = 1
