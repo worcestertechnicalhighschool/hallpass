@@ -2,27 +2,20 @@
 {% load bootstrap5 %}
 
 {% block content %}
+<div class="destination-box">
     <h1> Select Destinations </h1>
 
     <div class = "col-sm-6">
     <form action="" method="post" id="destination-form">
         {% csrf_token %}
-        <fieldset class="form-group">
-          <legend>Change Buildings</legend>
-          {% bootstrap_form form layout="horizontal" exclude="destinations" %}
-          <input type="hidden" name="next" value="{{ next }}" >
-          <button type="submit" class="btn btn-primary">
-            Change Buildings
-          </button>
-        </fieldset>
-        
-        <fieldset class="form-group">
-          <legend>Change Destinations</legend>
-        {% bootstrap_form form exclude="building" %}
+        {% bootstrap_form form %}
+        <input type='hidden' name='next' value='{{ next }}' >
+        {% buttons %}
         <button type="submit" class="btn btn-primary">
-          Monitor Destinations
+          Submit
         </button>
-        </fieldset>
+        {% endbuttons %}
       </form>
-    </div>
+  </div>
+</div>
 {% endblock %}
