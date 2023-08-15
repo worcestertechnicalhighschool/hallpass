@@ -1,1 +1,1 @@
-web: cd ./hallpass; python manage.py migrate && python manage.py collectstatic --no-input && gunicorn locallibrary.wsgi
+web: cd ./hallpass; python manage.py migrate && python manage.py collectstatic --no-input && gunicorn hallpass.wsgi
