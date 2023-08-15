@@ -13,17 +13,17 @@ body {
 
 .student-button {
     margin-top: 20px;
+    
     text-align: center;
-    background-color: rgb(112, 119, 151);
-    border-radius: $edge-rounding;
 
     padding: 50px;
-    box-shadow: $drop-shadow;
-
-    border: 2px solid rgb(230, 218, 218);
-
     label {
         display: none;
+    }
+
+    form {
+        max-width: 900px;
+        margin: auto;
     }
     
 }
@@ -31,7 +31,7 @@ body {
 .columns {
     display: flex;
     flex-direction: row;
-    max-width: 900px;
+    width: 100vw;
     overflow-x: auto;
     margin-bottom: 100px;
 }
@@ -49,6 +49,9 @@ body {
     box-shadow: $drop-shadow;
 
     padding: 15px;
+    h2 {
+        font-size: 25px;
+    }
 }
 
 .col-content {    
@@ -84,7 +87,7 @@ body {
     padding: 10px;
 
     margin: -16px;
-    min-height: 150px;
+    min-height: 100px;
 
     transition: background-color 0.3s;
 }
