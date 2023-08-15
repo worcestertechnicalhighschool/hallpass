@@ -49,6 +49,9 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('building','destinations',)
+        widgets = {
+            'building': forms.Select(attrs={'onchange':'this.form.submit()'})
+        }
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
