@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "www.hallpass.tech",
-    "https://hallpass-6e6846d74cd1.herokuapp.com/"
+    "hallpass-6e6846d74cd1.herokuapp.com/"
 ]
 
 SITE_ID = 1
@@ -170,14 +170,13 @@ SASS_PROCESSOR_STORAGE_OPTIONS = {
 
 # Email Configuration
 if not DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    # These two should DEFINITELY be defined in production
-    EMAIL_HOST_USER = os.environ['email']
-    EMAIL_HOST_PASSWORD = os.environ['email_password']
+    EMAIL_HOST = 'smtp.sendgrid.net'
     EMAIL_PORT = 587
+    EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME', "")
+    EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD', "")
     EMAIL_USE_TLS = True
-    DEFAULT_FROM_EMAIL = 'default from email'
+    DEFAULT_FROM_EMAIL = 'Jeff <noreply@hallpass.tech>'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
