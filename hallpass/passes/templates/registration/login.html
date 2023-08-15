@@ -2,10 +2,12 @@
 {% load bootstrap5 %}
 
 {% block content %}
+<div class = 'login_box'>
     <h1> Account Login</h1>
 
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
+      </div>
     {% endif %}
 
     {% if next %}
@@ -19,7 +21,9 @@
 
     <form action="{% url 'login' %}" method="post" class="form">
         {% csrf_token %}
-        {% bootstrap_form form %}
+        <div  >
+        {% bootstrap_form form  %}
+     
         <input type='hidden' name='next' value='{{ next }}'>
         {% buttons %}
           <button type="submit" class="btn btn-primary">
@@ -30,5 +34,5 @@
 
     {# Assumes you setup the password_reset view in your URLconf #}
     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
+ </div>
 {% endblock %}
