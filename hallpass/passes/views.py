@@ -34,6 +34,7 @@ def monitor_destinations(request):
                 )
 
                 hallpass.save()
+                form = CreateHallPassForm(request=request)
 
         elif 'Out' in request.POST['action']:
             log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
