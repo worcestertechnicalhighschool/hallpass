@@ -1,5 +1,11 @@
-@import "./student-logs.scss";
 @import "./variables.scss";
 @import "./layout.scss";
+@import "./utils.scss";
+@import "./student-logs.scss";
 @import "./login.scss";
-@import "./dashboard-box.scss"
+@import "./dashboard-box.scss";
+
+// Components
+@import "components/student-sign-in.scss";
+@import "components/buttons.scss";
+@import "components/monitor-destinations.scss";

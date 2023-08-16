@@ -1,3 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
 h1 {
     color: $header-font-color;
 }
@@ -6,104 +19,6 @@ body {
     background-color: $body-color;
 }
 
-.center {
-    display: flex;
-    justify-content: center;
-}
-
-.student-button {
-    margin-top: 20px;
-    
-    text-align: center;
-
-    padding: 50px;
-    label {
-        display: none;
-    }
-
-    form {
-        max-width: 900px;
-        margin: auto;
-    }
-    
-}
-
-.columns {
-    display: grid;
-
-    .student-input-page {
-    width: 100vw;
-}
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: auto;
-    margin-bottom: 100px;
-    justify-content: safe center;
-
-}
-
-.col {
-    margin: 10px;
-
-    border-radius: $edge-rounding;
-
-    height: 600px;
-	width: 400px;
-    max-width: 400px;
-    align-items: center;
-
-    display: flex;
-    flex-direction: column;
-    box-shadow: $drop-shadow;
-
-    padding: 15px;
-    h2 {
-        font-size: 25px;
-    }
-}
-
-.col-content {    
-    margin-top: 30px;
-
-    height: 550px;
-	width: 350px;
-    
-    overflow-y: auto;
-}
-
-.destination-log {
-    background-color: $pass-bg-color;
-    color: $pass-font-color;
-    padding: 10px;
-    margin: 10px;
-
-    border: 2px solid rgb(230, 218, 218);
-    border-radius: $edge-rounding;
-    box-shadow: $drop-shadow;
-}
-
-.footer {
-    position: fixed;
-    bottom: 0px;
-    background-color: $navbar-color;
-}
-
-.student-login-button {
-    border-radius: $edge-rounding;
-    border-width: 5px;
-    border-color: inherit;
-    padding: 10px;
-
-    margin: -16px;
-    min-height: 100px;
-
-    transition: background-color 0.3s;
-}
-.student-login-button:hover{
-    background-color: rgb(181, 181, 181);
-    color: $pass-font-color;
-}
-
-.student-input-page {
-    width: 100vw;
-}
+// .footer {
+//     background-color: $navbar-color;
+// }
