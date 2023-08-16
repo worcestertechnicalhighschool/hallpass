@@ -57,6 +57,10 @@ INSTALLED_APPS = [
     'import_export',
     'bootstrap5',
     'sass_processor',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -185,3 +189,5 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# All Auth Settings
+SITE_ID = 1
