@@ -1,0 +1,47 @@
+
+.monitor-destinations {
+    display: grid;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: auto;
+    justify-content: start;
+    justify-content: safe center;
+    column-gap: 20px;
+    // height: calc(100vh - 290px);
+    
+    .destination {
+        margin-bottom: 30px;
+        text-align: center;
+        padding: 15px;
+        border-radius: $edge-rounding;
+        box-shadow: $drop-shadow;
+        width: 350px;
+        .destination-body {
+            overflow-y: auto;
+            height: calc(100vh - 350px);
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+
+            .destination-log {
+                background-color: $pass-bg-color;
+                color: $pass-font-color;
+                padding: 20px;
+                width: 100%;
+                border-radius: $edge-rounding;
+                box-shadow: $drop-shadow;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                row-gap: 15px;
+                .timer-display {
+                    font-size: 3em;
+                }
+            }
+        }
+
+    }
+
+}

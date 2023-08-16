@@ -1,0 +1,15 @@
+.student-sign-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 15px 10px;
+    h2 {
+        text-align: center;
+    }
+    .student-sign-in-form {
+        display: inline-block;
+        min-width: 420px;
+        margin: auto;
+    }
+}
