@@ -25,12 +25,9 @@ def monitor_destinations(request):
                 student_id = form.cleaned_data['student']
                 student = Student.objects.filter(student_id=student_id)[0]
                 d = Destination.objects.get(id = request.POST['action'].split(" ")[1])
-                print(student_id)
-                # if len(hallpasses.filter(destination = d)) != d.max_people_allowed or student_id: 
-                log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
-                student_logout_id = log_to_modify.student_id.student_id
 
-                hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
+                HallPass.objects.filter(student_id = student).update(Time_out = datetime.datetime.now())
+
                 hallpass = HallPass(
                     student_id = student,
                     destination = d,
