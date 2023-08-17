@@ -47,16 +47,23 @@ SESSION_COOKIE_SECURE = True
 # Application definition
 
 INSTALLED_APPS = [
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # the App!
     'passes.apps.PassesConfig',
+    # import/export
     'import_export',
+    # BSv5
     'bootstrap5',
+    # Sass
     'sass_processor',
+    # AllAuth
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -191,3 +198,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # All Auth Settings
 SITE_ID = 1
+LOGIN_REDIRECT_URL = "/dashboard"

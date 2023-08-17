@@ -1,0 +1,8 @@
+.brand a{
+    color: $primary;
+    text-decoration: none;
+    transition: $soft;
+    &:hover, &:focus, &:active {
+        color: $primary-hover;
+    }
+}
