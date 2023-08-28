@@ -3,7 +3,8 @@ from . import views
 from . import views_static as vs
 
 urlpatterns = [
-    path('', views.dashboard, name='select'), # CHANGE name to dashboard
+    path('', views.home, name='home'),
+    path('dashboard', views.dashboard, name='dashboard'), # CHANGE name to dashboard
     path('monitor_destinations', views.monitor_destinations, name='monitor'),
 
     # Static Pages required for OAuth and SEO

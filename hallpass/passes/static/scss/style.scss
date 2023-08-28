@@ -1,11 +1,13 @@
-@import "./variables.scss";
-@import "./layout.scss";
-@import "./utils.scss";
-@import "./student-logs.scss";
-@import "./login.scss";
-@import "./dashboard-box.scss";
+@import "hallpass/variables.scss";
+@import "hallpass/layout.scss";
+@import "hallpass/utils.scss";
 
 // Components
-@import "components/student-sign-in.scss";
-@import "components/buttons.scss";
-@import "components/monitor-destinations.scss";
+@import "hallpass/components/student-sign-in.scss";
+@import "hallpass/components/buttons.scss";
+@import "hallpass/components/monitor-destinations.scss";
+@import "hallpass/components/brand.scss";
+
+// Pages
+@import "hallpass/pages/login.scss";
+@import "hallpass/pages/dashboard.scss";

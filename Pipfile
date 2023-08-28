@@ -15,6 +15,7 @@ dj-database-url = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 django-wsgi = "*"
+django-allauth = "*"
 
 [dev-packages]
 

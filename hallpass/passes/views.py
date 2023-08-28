@@ -8,6 +8,9 @@ import datetime
 import string
 from django.views.decorators.http import require_http_methods
 
+def home(request):
+    return render(request, 'index.html', {})
+
 @login_required
 def monitor_destinations(request):
     user_profile = request.user.profile
@@ -15,7 +18,7 @@ def monitor_destinations(request):
     form = CreateHallPassForm(request = request)
 
     if not user_destinations:
-        return redirect(reverse('select'))
+        return redirect(reverse('dashboard'))
 
     hallpasses = HallPass.objects.filter(Time_out = None)
     if request.method == 'POST':
