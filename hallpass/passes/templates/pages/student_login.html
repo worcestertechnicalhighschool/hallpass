@@ -24,14 +24,14 @@
         {% if destinations %}
             {% for destination in destinations %}
                 <aside class="destination" style="background-color: {{ destination.category.color }};">
-                    <h3 class="destination-heading">{{ destination }}</h3>
+                    <h3 class="destination-heading"><strong>{{ destination }}</strong> <em>Max: {{ destination.max_people_allowed }}</em></h3>
                     <section class="destination-body">
                         {% for log in destination.hallpass_set.all %}
                             {% if not log.Time_out %}
                                 <div class="destination-log">
                                     <div class="student">{{ log.student_id }}</div> 
                                     <div class="time-in">Time In: {{ log.Time_in|date:"h:i A" }}</div>
-                                    <div class="timer-display"> 00 : 00 : 00 : 000 </div>
+                                    <div class="timer-display"> &nbsp; </div>
                                     <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
                                     <form id="form-{{log.id}}" action="" method="POST">
                                         {% csrf_token %}
@@ -55,16 +55,21 @@
 {% block scripts %}
 <script>
     document.querySelector('#id_student').focus();
-    timeRefs = document.querySelectorAll(".timer-display");
-    startTimes = document.querySelectorAll(".start-time");
+    logs = document.querySelectorAll(".destination-log");
+    minutesUntilWarning = 5;
 
-    setInterval(() => {       
-        for (var i = 0; i < timeRefs.length; i++) {
-            let date = new Date() - new Date(startTimes[i].innerHTML);
-            // let times = formatDate(date);
+    setInterval(() => {     
+        logs.forEach(log => {
+            let display = log.querySelector(".timer-display");
+            let startTime = log.querySelector(".start-time");
 
-            timeRefs[i].innerHTML = millisecondsToStopWatch(date);
-        }
+            let deltaMilliseconds = new Date() - new Date(startTime.innerHTML);
+            display.innerHTML = millisecondsToStopWatch(deltaMilliseconds);
+
+            if (deltaMilliseconds > 1000 * 60 * minutesUntilWarning && !log.classList.contains('stopwatch-warning')) {
+                log.classList.add('stopwatch-warning');
+            }
+        })
     }, 10);
 
     // function formatDate(difference) {
@@ -100,7 +105,7 @@
         if (time.length > 0) {
             return `:${time[0]?.toString().padStart(2,'0')}`;
         }
-        return '';  
+        return ":00";  
     }
 </script>
 {% endblock %}
