@@ -87,7 +87,7 @@ ROOT_URLCONF = 'hallpass.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -199,3 +199,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # All Auth Settings
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/dashboard"
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ]
+        
+    }
+}
+# Point to custom account adapter.
+SOCIALACCOUNT_ADAPTER = 'passes.adapter.HallpassAccountAdapter' 
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+SOCIALACCOUNT_LOGOUT_REDIRECT_URL = '/'

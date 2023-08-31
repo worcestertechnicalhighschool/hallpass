@@ -65,3 +65,5 @@ def dashboard(request):
         profile_form = ProfileForm(instance=request.user.profile)
 
     return render(request, 'pages/dashboard.html', { 'form': profile_form, })
+
+
