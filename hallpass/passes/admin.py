@@ -7,7 +7,7 @@ from import_export.fields import Field
 class StudentResource(resources.ModelResource):
     class Meta:
         model = Student
-        fields = ('id', 'first_name', 'last_name', 'student_id', 'building__building')
+        fields = ('id', 'first_name', 'last_name', 'student_id', 'building')
 
 class StudentImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = StudentResource
@@ -15,10 +15,22 @@ class StudentImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 admin.site.register(Student, StudentImportExportAdmin)
 
+class BuildingResource(resources.ModelResource):
+    class Meta:
+        model = Building
+        fields = ('id','building')
+
+class BuildingImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = BuildingResource
+    list_display = ('id','building')
+
+admin.site.register(Building, BuildingImportExportAdmin)
+
 class HallPassAdminResource(resources.ModelResource):
     class Meta:
         model = HallPass
         fields = ('id', 'student_id__student_id', 'destination__room', 'Time_in', 'Time_out')
+
 
 class HallPassImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = HallPassAdminResource
@@ -35,6 +47,6 @@ from .forms import CategoryForm
 class CategoryAdmin(admin.ModelAdmin):
     form = CategoryForm
 
-admin.site.register(Building)
+# admin.site.register(Building)
 admin.site.register(Profile)
 admin.site.register(Destination)
