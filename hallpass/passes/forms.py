@@ -66,6 +66,7 @@ class CategoryForm(ModelForm):
         fields = '__all__'
         widgets = {
             'color': TextInput(attrs={'type': 'color'}),
+            'text_color': TextInput(attrs={'type': 'color'}),
         }
 
 class ContactForm(forms.Form):

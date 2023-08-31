@@ -19,11 +19,19 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('accounts/', include('django.contrib.auth.urls')),
-    path('logout', LogoutView.as_view(), name="logout"),
+    # path('logout', LogoutView.as_view(), name="logout"),
+    path('logout/',
+    auth_views.LogoutView.as_view(
+        template_name='registration/logged_out.html',
+        next_page=None
+    ),
+    name = 'logout'
+),
     path('', include('passes.urls')),
     # All auth urls
     path('accounts/', include('allauth.urls')),
