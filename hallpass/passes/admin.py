@@ -50,3 +50,13 @@ class CategoryAdmin(admin.ModelAdmin):
 # admin.site.register(Building)
 admin.site.register(Profile)
 admin.site.register(Destination)
+
+# default: "Django Administration"
+admin.site.site_header = 'HallPass Admin'
+
+# default: "Site administration"
+admin.site.index_title = 'Passes Administration'  
+
+# default: "Django site admin"
+admin.site.site_title = 'HallPass'    
+                 
