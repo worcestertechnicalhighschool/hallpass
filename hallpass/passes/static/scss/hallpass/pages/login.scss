@@ -1,9 +1,21 @@
 .login{
-    background-color: rgb(195, 198, 250);
+    background-color: rgb(255, 255, 255);
     max-width: 400px ;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: auto;
     margin-top: 50px;
+
+    .login-button{
+        margin-top: 65px;
+        margin-bottom: 15px;
+    }
+    .login-terms{
+        font-size: 12px;
+    }
+    
+    .login-title{
+       text-align: center;
+    }
 }
 
