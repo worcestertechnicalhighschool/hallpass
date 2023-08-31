@@ -4,19 +4,29 @@
 
 {% block content %}
 
-<!-- <p><em>The student monitoring system</em></p> -->
+<!-- <p><em>The student monitoring system/<em></p> -->
 
+<div class="login">
 <h2>Get started</h2>
+
+
 <p>To begin monitoring hall passes, login with your authorized Google account below.
     If you are unsure if you have access, please see your administrator, 
     or <a href="{% url 'contact' %}">contact our team</a>.
 </p>
 {% load socialaccount %}
-<form class="d-inline" id="login" action="{% provider_login_url "google" %}" method="post">
+<form class="d-inline" id="login" action="{% provider_login_url 'google' %}" method="post">
     {% csrf_token %}
+    <div class="login-button">
     <button class="btn btn-outline-primary w-100" type="submit">
         <img style="width: 25px" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google logo">
         Login with Google
     </button>
+</div>
+<p class = "login-terms">By signing up, you agree to the <a href="{% url 'terms' %}" >Terms of Use</a> and <a href="{% url 'privacy' %}" >Privacy Policy</a>, including Cookie Use.</p>
+
+          
+        </nav>
 </form>
+</div>
 {% endblock %}

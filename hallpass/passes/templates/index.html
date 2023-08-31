@@ -15,7 +15,7 @@
     or <a href="{% url 'contact' %}">contact our team</a>.
 </p>
 {% load socialaccount %}
-<form class="d-inline" id="login" action="{% provider_login_url "google" %}" method="post">
+<form class="d-inline" id="login" action="{% provider_login_url 'google' %}" method="post">
     {% csrf_token %}
     <div class="login-button">
     <button class="btn btn-outline-primary w-100" type="submit">

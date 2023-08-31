@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('HallPass site admin') }}{% endblock %}
+
+{# This templates overrides the backend base_site to include the branding for "HallPass" in teh admin site. #}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">HallPass administration</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
