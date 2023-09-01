@@ -26,6 +26,18 @@ class BuildingImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 admin.site.register(Building, BuildingImportExportAdmin)
 
+class DestinationResource(resources.ModelResource):
+    class Meta:
+        model = Destination
+        fields = ('id','building', 'room', 'category', 'max_people_allowed')
+   
+
+class DestinationImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = DestinationResource
+    list_display = ('id','building', 'room', 'category', 'max_people_allowed')
+
+admin.site.register(Destination, DestinationImportExportAdmin)
+
 class HallPassAdminResource(resources.ModelResource):
     class Meta:
         model = HallPass
@@ -49,7 +61,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 # admin.site.register(Building)
 admin.site.register(Profile)
-admin.site.register(Destination)
+# admin.site.register(Destination)
 
 # default: "Django Administration"
 admin.site.site_header = 'HallPass Admin'

@@ -19,7 +19,7 @@ class Command(BaseCommand):
         if options['config']:
             app = SocialApp(
                 provider = "google",
-                name = "HallPass",
+                name = "HallPass", # Hallpass 
                 client_id = os.environ["GOOGLE_CLIENT_ID"],
                 secret = os.environ["GOOGLE_CLIENT_SECRET"],
             )
