@@ -24,7 +24,7 @@
         {% if destinations %}
             {% for destination in destinations %}
                 <aside class="destination" style="background-color: {{ destination.category.color }}; color:{{ destination.category.text_color }}  ">
-                    <h3 class="destination-heading"><strong>{{ destination }}</strong> <em>Max: {{ destination.max_people_allowed }}</em></h3>
+                    <h3 class="destination-heading"><strong>{{ destination }}</strong> <br> <em>Max people: {{ destination.max_people_allowed }}</em></h3>
                     <section class="destination-body">
                         {% for log in destination.hallpass_set.all %}
                             {% if not log.Time_out %}
