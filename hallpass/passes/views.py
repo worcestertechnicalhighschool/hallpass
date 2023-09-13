@@ -15,36 +15,46 @@ def home(request):
 def monitor_destinations(request):
     user_profile = request.user.profile
     user_destinations = user_profile.destinations.filter(building = user_profile.building)
-    form = CreateHallPassForm(request = request)
+    # form = CreateHallPassForm(request = request)
+    form = CreateHallPassForm(request.POST, request = request)
 
     if not user_destinations:
         return redirect(reverse('dashboard'))
 
     hallpasses = HallPass.objects.filter(Time_out = None)
+    count = len(HallPass.objects.exclude(Time_in = None).filter(Time_out = None))
     if request.method == 'POST':
-        if 'Enter' in request.POST['action']:
-            form = CreateHallPassForm(request.POST, request = request)
+        if 'Enter' in request.POST['action']: 
             if form.is_valid(): 
-                student_id = form.cleaned_data['student']
-                student = Student.objects.filter(student_id=student_id)[0]
                 d = Destination.objects.get(id = request.POST['action'].split(" ")[1])
-
-                HallPass.objects.filter(student_id = student).update(Time_out = datetime.datetime.now())
+                student_id = form.cleaned_data['student']   
+                student = Student.objects.filter(student_id=student_id)[0]
+           
+                def queueCheck():
+                    if len(HallPass.objects.filter(student_id = student)) >= 1:
+                        HallPass.objects.filter(student_id = student).update(Time_out = datetime.datetime.now())
+                    count = len(HallPass.objects.exclude(Time_in = None).filter(Time_out = None))
+                    if d.max_people_allowed > count :
+                        return datetime.datetime.now()
 
                 hallpass = HallPass(
                     student_id = student,
                     destination = d,
-                    building = d.building
+                    building = d.building,
+                    Time_in = queueCheck()
                 )
 
                 hallpass.save()
                 form = CreateHallPassForm(request=request)
+                
             
         elif 'Out' in request.POST['action']:
             log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
             student_logout_id = log_to_modify.student_id.student_id
-
             hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
+            print(len(HallPass.objects.filter(Time_in = None).filter(Time_out = None)))
+            if log_to_modify.destination.max_people_allowed > count and len(HallPass.objects.filter(Time_in = None).filter(Time_out = None)) > 0:
+                HallPass.objects.filter(Time_in = None).filter(Time_out = None)[0].Time_in = datetime.datetime.now()
 
     return render(request, 'pages/student_login.html', {'form': form, 'profile': user_profile, 'destinations': user_destinations })
 
