@@ -52,9 +52,10 @@ def monitor_destinations(request):
             log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
             student_logout_id = log_to_modify.student_id.student_id
             hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
-            print(len(HallPass.objects.filter(Time_in = None).filter(Time_out = None)))
-            if log_to_modify.destination.max_people_allowed > count and len(HallPass.objects.filter(Time_in = None).filter(Time_out = None)) > 0:
-                HallPass.objects.filter(Time_in = None).filter(Time_out = None)[0].Time_in = datetime.datetime.now()
+            if log_to_modify.destination.max_people_allowed >= count and len(HallPass.objects.filter(Time_in = None).filter(Time_out = None)) > 0:
+                log = HallPass.objects.filter(Time_in = None).filter(Time_out = None)[0]
+                log.Time_in = datetime.datetime.now()
+                log.save()
 
     return render(request, 'pages/student_login.html', {'form': form, 'profile': user_profile, 'destinations': user_destinations })
 
