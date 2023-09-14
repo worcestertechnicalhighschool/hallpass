@@ -58,6 +58,12 @@ def monitor_destinations(request):
                 log.Time_in = datetime.datetime.now()
                 log.save()
 
+        elif 'In' in request.POST['action']:
+            log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
+            log_to_modify.Time_in = datetime.datetime.now()
+            log_to_modify.save()
+
+
     return render(request, 'pages/student_login.html', {'form': form, 'profile': user_profile, 'destinations': user_destinations })
 
 @login_required

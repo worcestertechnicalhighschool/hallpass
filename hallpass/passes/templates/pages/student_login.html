@@ -36,6 +36,9 @@
                                         <div class="start-time" hidden>{{ log.Arrival_time.isoformat }}</div>
                                         <form id="form-{{log.id}}" action="" method="POST">
                                             {% csrf_token %}
+                                            <button class="btn btn-primary" id="logOut" name="action" value ="In {{ log.id }}" >
+                                                Time In
+                                            </button>
                                             <button class="btn btn-danger" id="logOut" name="action" value ="Out {{ log.id }}" >
                                                 Cancel
                                             </button>
