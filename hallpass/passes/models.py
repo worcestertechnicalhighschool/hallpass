@@ -56,7 +56,7 @@ class HallPass(models.Model):
 
     def __str__(self): 
            
-            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: {self.Time_out} Arrival_time: {self.Arrival_time}"
+            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: {self.Time_out}, Arrival_time: {self.Arrival_time}"
 
 class Profile(models.Model):
     destinations = models.ManyToManyField(Destination, blank=True)
