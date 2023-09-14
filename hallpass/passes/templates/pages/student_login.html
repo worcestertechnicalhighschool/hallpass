@@ -28,18 +28,33 @@
                     <section class="destination-body">
                         {% for log in destination.hallpass_set.all %}
                             {% if not log.Time_out %}
-                                <div class="destination-log">
-                                    <div class="student">{{ log.student_id }}</div> 
-                                    <div class="time-in">Time In: {{ log.Time_in|date:"h:i A" }}</div>
-                                    <div class="timer-display"> &nbsp; </div>
-                                    <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
-                                    <form id="form-{{log.id}}" action="" method="POST">
-                                        {% csrf_token %}
-                                        <button class="btn btn-primary" id="logOut" name="action" value ="Out {{ log.id }}" >
-                                            Log Out
-                                        </button>
-                                    </form>
-                                </div>
+                                {% if not log.Time_in %}
+                                    <div class="destination-log-disabled" >
+                                        <div class="student">{{ log.student_id }}</div> 
+                                        <div class="time-in">Arrival Time: {{ log.Arrival_time|date:"h:i A" }}</div>
+                                        <div class="timer-display"> &nbsp; </div>
+                                        <div class="start-time" hidden>{{ log.Arrival_time.isoformat }}</div>
+                                        <form id="form-{{log.id}}" action="" method="POST">
+                                            {% csrf_token %}
+                                            <button class="btn btn-danger" id="logOut" name="action" value ="Out {{ log.id }}" >
+                                                Cancel
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <div class="destination-log">
+                                        <div class="student">{{ log.student_id }}</div> 
+                                        <div class="time-in">Time In: {{ log.Time_in|date:"h:i A" }}</div>
+                                        <div class="timer-display"> &nbsp; </div>
+                                        <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
+                                        <form id="form-{{log.id}}" action="" method="POST">
+                                            {% csrf_token %}
+                                            <button class="btn btn-primary" id="logOut" name="action" value ="Out {{ log.id }}" >
+                                                Log Out
+                                            </button>
+                                        </form>
+                                    </div>
+                                    {% endif %}
                             {% endif %}
                         {% endfor %}
                     </section>

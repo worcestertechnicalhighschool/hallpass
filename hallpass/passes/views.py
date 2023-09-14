@@ -22,18 +22,18 @@ def monitor_destinations(request):
         return redirect(reverse('dashboard'))
 
     hallpasses = HallPass.objects.filter(Time_out = None)
-    count = len(HallPass.objects.exclude(Time_in = None).filter(Time_out = None))
     if request.method == 'POST':
         if 'Enter' in request.POST['action']: 
             if form.is_valid(): 
                 d = Destination.objects.get(id = request.POST['action'].split(" ")[1])
+                count = len(HallPass.objects.filter(destination = d).exclude(Time_in = None).filter(Time_out = None))
                 student_id = form.cleaned_data['student']   
                 student = Student.objects.filter(student_id=student_id)[0]
            
                 def queueCheck():
                     if len(HallPass.objects.filter(student_id = student)) >= 1:
                         HallPass.objects.filter(student_id = student).update(Time_out = datetime.datetime.now())
-                    count = len(HallPass.objects.exclude(Time_in = None).filter(Time_out = None))
+                    count = len(HallPass.objects.filter(destination = d).exclude(Time_in = None).filter(Time_out = None))
                     if d.max_people_allowed > count :
                         return datetime.datetime.now()
 
@@ -51,9 +51,10 @@ def monitor_destinations(request):
         elif 'Out' in request.POST['action']:
             log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
             student_logout_id = log_to_modify.student_id.student_id
+            count = len(HallPass.objects.filter(destination = log_to_modify.destination).exclude(Time_in = None).filter(Time_out = None))
             hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
-            if log_to_modify.destination.max_people_allowed >= count and len(HallPass.objects.filter(Time_in = None).filter(Time_out = None)) > 0:
-                log = HallPass.objects.filter(Time_in = None).filter(Time_out = None)[0]
+            if log_to_modify.destination.max_people_allowed >= count and len(HallPass.objects.filter(destination = log_to_modify.destination).filter(Time_in = None).filter(Time_out = None)) > 0:
+                log = HallPass.objects.filter(destination = log_to_modify.destination).filter(Time_in = None).filter(Time_out = None)[0]
                 log.Time_in = datetime.datetime.now()
                 log.save()
 
