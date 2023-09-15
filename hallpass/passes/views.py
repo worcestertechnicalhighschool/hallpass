@@ -30,23 +30,27 @@ def monitor_destinations(request):
                 student_id = form.cleaned_data['student']   
                 student = Student.objects.filter(student_id=student_id)[0]
            
-                def queueCheck(bathroomCount):
+                def queueCheck(bathroomCount, destination):
+                    previous_destination = None
+                    if len(HallPass.objects.filter(student_id = student).filter(Time_out = None)) > 0:
+                        previous_destination = HallPass.objects.filter(student_id = student).filter(Time_out = None)[0].destination
+                    current_destination = destination
                     if len(HallPass.objects.filter(student_id = student).filter(Time_out = None)) >= 1:
-                        # d = HallPass.objects.filter(student_id = student)[0].destination
-                        # count = len(HallPass.objects.filter(student_id = student).filter(destination = d).exclude(Time_in = None).filter(Time_out = None))
-                        # if d.max_people_allowed > count and len(HallPass.objects.filter(destination = d).filter(Time_in = None).filter(Time_out = None)) > 0:
-                        #     log = HallPass.objects.filter(destination = d).filter(Time_in = None).filter(Time_out = None)[0]
-                        #     log.Time_in = datetime.datetime.now()
-                        #     log.save()
                         HallPass.objects.filter(student_id = student).filter(Time_out = None).update(Time_out = datetime.datetime.now())
-                    if d.max_people_allowed > bathroomCount :
+                        if len(HallPass.objects.filter(destination = previous_destination).filter(Time_in = None).filter(Time_out = None)) > 0:
+                            log = HallPass.objects.filter(destination = previous_destination).filter(Time_in = None).filter(Time_out = None)[0]
+                            log.Time_in = datetime.datetime.now()
+                            log.save()
+                        bathroomCount = len(HallPass.objects.filter(destination = d).exclude(Time_in = None).filter(Time_out = None))
+                            
+                    if current_destination.max_people_allowed > bathroomCount:
                         return datetime.datetime.now()
 
                 hallpass = HallPass(
                     student_id = student,
                     destination = d,
                     building = d.building,
-                    Time_in = queueCheck(count)
+                    Time_in = queueCheck(count, d)
                 )
 
                 hallpass.save()
