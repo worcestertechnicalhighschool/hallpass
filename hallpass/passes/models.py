@@ -41,21 +41,22 @@ class Destination(models.Model):
          return f"{self.room} Genderless" 
 
 class HallPass(models.Model):
-    Time_in = models.DateTimeField(auto_now=True)
+    Time_in = models.DateTimeField(blank=True, null=True)
     Time_out = models.DateTimeField(blank=True, null=True)
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     destination = models.ForeignKey(Destination, null=True, on_delete=models.SET_NULL)
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    Arrival_time = models.DateTimeField(auto_now=True)
+
     
     class Meta:
         verbose_name_plural = "hall passes"
         permissions = (("can_view_log_history", "can_edit_log_history"),)
 
-    def __str__(self):  
-            self.Time_in = datetime.now()
+    def __str__(self): 
            
-            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: x{self.Time_out} "
+            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: {self.Time_out}, Arrival_time: {self.Arrival_time}"
 
 class Profile(models.Model):
     destinations = models.ManyToManyField(Destination, blank=True)
