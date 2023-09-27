@@ -48,6 +48,7 @@ class HallPass(models.Model):
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     Arrival_time = models.DateTimeField(auto_now=True)
+    forgot_time_out = models.BooleanField(default=False)
 
     
     class Meta:
