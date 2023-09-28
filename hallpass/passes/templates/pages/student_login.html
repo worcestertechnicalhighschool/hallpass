@@ -36,13 +36,13 @@
                                         <div class="start-time" hidden>{{ log.Arrival_time.isoformat }}</div>
                                         <form action="{% url 'time_in' %}" method="POST">
                                             {% csrf_token %}
-                                            <button class="btn btn-primary" name="log-id" value ="{{ log.id }}" >
+                                            <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
                                                 Time In
                                             </button>
                                         </form>
                                         <form action="{% url 'time_out' %}" method="POST">
                                             {% csrf_token %}
-                                            <button class="btn btn-danger" name="log-id" value ="{{ log.id }}" >
+                                            <button class="btn btn-danger" name="log_id" value ="{{ log.id }}" >
                                                 Cancel
                                             </button>
                                         </form>
@@ -55,7 +55,7 @@
                                         <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
                                         <form action="{% url 'time_out' %}" method="POST">
                                             {% csrf_token %}
-                                            <button class="btn btn-primary" name="log-id" value ="{{ log.id }}" >
+                                            <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
                                                 Time Out
                                             </button>
                                         </form>
@@ -74,7 +74,9 @@
 
 {% block scripts %}
 <script>
-    document.querySelector('#id_student').focus();
+    // set focus on arrival form every time
+    document.querySelector('#id_student_id').focus();
+
     logs = document.querySelectorAll(".destination-log");
     minutesUntilWarning = 5;
 

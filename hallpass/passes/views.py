@@ -27,17 +27,24 @@ def time_in(request):
 @require_http_methods(["POST"])
 def time_out(request):
     form = LogForm(request.POST)
+    print(form)
     if form.is_valid():
         log_id = form.cleaned_data['log_id']
         log = get_object_or_404(HallPass, pk = log_id)
-        # check to makes sure they havent been signed out at another computer
+        # check to makes sure they haven't been signed out at another computer
         if log.Time_out == None:
             log.Time_out = datetime.datetime.now()
             log.save()
+        # Check to see if we can time_in the next person in queue
         destination = log.destination
         max = destination.max_people_allowed
         count_in = len(HallPass.objects.filter(destination = destination).exclude(Time_in = None).filter(Time_out = None))
         count_waiting = len(HallPass.objects.filter(destination = destination).filter(Time_in = None).filter(Time_out = None))
+        if count_in < max and count_waiting > 0:
+            next_in_line = HallPass.objects.filter(destination = destination).filter(Time_in = None).filter(Time_out = None)[0]
+            next_in_line.Time_in = datetime.datetime.now()
+            next_in_line.save()
+    
     return redirect("monitor")
 
 @login_required
@@ -56,14 +63,15 @@ def arrival(request):
         # makes a new log
         destination_id = form.cleaned_data['destination_id']
         destination = get_object_or_404(Destination, pk = destination_id)
-        max = destination.max_people_allowed
         log = HallPass(
             student_id = student,
             destination = destination,
             building = destination.building,
-            Arrival_time = datetime.datetime.now()
+            Arrival_time = datetime.datetime.now(),
+            user = request.user,
         )
-        
+        # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
+        max = destination.max_people_allowed
         count_in = len(HallPass.objects.filter(destination = destination).exclude(Time_in = None).filter(Time_out = None))
         if count_in < max:
             log.Time_in = datetime.datetime.now()
@@ -78,6 +86,7 @@ def monitor_destinations(request):
     
     if not user_destinations:
         return redirect(reverse('dashboard'))
+    
     arrival_form = ArrivalForm()
     destination_data = []
     for destination in user_destinations:
@@ -88,7 +97,7 @@ def monitor_destinations(request):
                 "logs":logs,
             }
         )
-        print(destination_data)
+        # print(destination_data)
     return render(
         request,
         'pages/student_login.html',
