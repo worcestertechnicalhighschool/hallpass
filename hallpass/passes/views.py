@@ -19,7 +19,7 @@ def time_in(request):
     if form.is_valid():
         log_id = form.cleaned_data['log_id']
         log = get_object_or_404(HallPass, pk = log_id)
-        log.Time_in = datetime.datetime.now()
+        log.time_in = datetime.datetime.now()
         log.save()
     return redirect("monitor")
 
@@ -32,17 +32,17 @@ def time_out(request):
         log_id = form.cleaned_data['log_id']
         log = get_object_or_404(HallPass, pk = log_id)
         # check to makes sure they haven't been signed out at another computer
-        if log.Time_out == None:
-            log.Time_out = datetime.datetime.now()
+        if log.time_out == None:
+            log.time_out = datetime.datetime.now()
             log.save()
         # Check to see if we can time_in the next person in queue
         destination = log.destination
         max = destination.max_people_allowed
-        count_in = len(HallPass.objects.filter(destination = destination).exclude(Time_in = None).filter(Time_out = None))
-        count_waiting = len(HallPass.objects.filter(destination = destination).filter(Time_in = None).filter(Time_out = None))
+        count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
+        count_waiting = len(HallPass.objects.filter(destination = destination).filter(time_in = None).filter(time_out = None))
         if count_in < max and count_waiting > 0:
-            next_in_line = HallPass.objects.filter(destination = destination).filter(Time_in = None).filter(Time_out = None)[0]
-            next_in_line.Time_in = datetime.datetime.now()
+            next_in_line = HallPass.objects.filter(destination = destination).filter(time_in = None).filter(time_out = None)[0]
+            next_in_line.time_in = datetime.datetime.now()
             next_in_line.save()
     
     return redirect("monitor")
@@ -53,11 +53,15 @@ def arrival(request):
     form = ArrivalForm(request.POST)
     if form.is_valid():
         student_id = form.cleaned_data['student_id']
+
+
+        # if (student_id not in Student.objects.filter(student_id)):
+        #     return redirect("monitor")
         student = get_object_or_404(Student, student_id = student_id)
         # checks to see if student forgot to log out
-        logs = HallPass.objects.filter(student_id = student).filter(Time_out = None)
+        logs = HallPass.objects.filter(student_id = student).filter(time_out = None)
         for l in logs:
-            l.Time_out = datetime.datetime.now()# logs student out 
+            l.time_out = datetime.datetime.now()# logs student out 
             l.forgot_time_out = True
             l.save()
         # makes a new log
@@ -67,14 +71,14 @@ def arrival(request):
             student_id = student,
             destination = destination,
             building = destination.building,
-            Arrival_time = datetime.datetime.now(),
+            arrival_time = datetime.datetime.now(),
             user = request.user,
         )
         # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
         max = destination.max_people_allowed
-        count_in = len(HallPass.objects.filter(destination = destination).exclude(Time_in = None).filter(Time_out = None))
+        count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
         if count_in < max:
-            log.Time_in = datetime.datetime.now()
+            log.time_in = datetime.datetime.now()
         log.save()
         
     return redirect("monitor")
@@ -90,7 +94,7 @@ def monitor_destinations(request):
     arrival_form = ArrivalForm()
     destination_data = []
     for destination in user_destinations:
-        logs = HallPass.objects.filter(destination = destination).filter(Time_out = None)
+        logs = HallPass.objects.filter(destination = destination).filter(time_out = None)
         destination_data.append(
             {
                 "destination":destination,
@@ -109,8 +113,8 @@ def monitor_destinations(request):
         }
     )
     # if count_in < max and count_waiting > 0:
-    #     log = HallPass.objects.filter(destination = destination).filter(Time_in = None).filter(Time_out = None)[0]
-    #     log.Time_in = datetime.datetime.now()
+    #     log = HallPass.objects.filter(destination = destination).filter(time_in = None).filter(time_out = None)[0]
+    #     log.time_in = datetime.datetime.now()
     #     log.save()
     
     # form = CreateHallPassForm(user_destinations = user_destinations)
@@ -118,7 +122,7 @@ def monitor_destinations(request):
 
     # if request.method == 'POST':
     #     form = CreateHallPassForm(request.POST)
-    #     hallpasses = HallPass.objects.filter(Time_out = None)
+    #     hallpasses = HallPass.objects.filter(time_out = None)
 
         # This form has several "action" elements that postback here.
         # if 'enter' in request.POST['action']: # Should we create a hidden input for this? 
@@ -127,22 +131,22 @@ def monitor_destinations(request):
         #         destination_id = form.cleaned_data['action']
         #         print(destination_id) # This contains the action and the DestID. Maybe we separate these?
         #         d = Destination.objects.get(id = request.POST['action'].split(" ")[1])
-        #         count = len(HallPass.objects.filter(destination = d).exclude(Time_in = None).filter(Time_out = None))
+        #         count = len(HallPass.objects.filter(destination = d).exclude(time_in = None).filter(time_out = None))
         #         student_id = form.cleaned_data['student']   
         #         student = Student.objects.filter(student_id=student_id)[0]
            
                 # def queueCheck(bathroomCount, destination):
                 #     previous_destination = None
-                #     if len(HallPass.objects.filter(student_id = student).filter(Time_out = None)) > 0:
-                #         previous_destination = HallPass.objects.filter(student_id = student).filter(Time_out = None)[0].destination
+                #     if len(HallPass.objects.filter(student_id = student).filter(time_out = None)) > 0:
+                #         previous_destination = HallPass.objects.filter(student_id = student).filter(time_out = None)[0].destination
                 #     current_destination = destination
-                #     if len(HallPass.objects.filter(student_id = student).filter(Time_out = None)) >= 1:
-                #         HallPass.objects.filter(student_id = student).filter(Time_out = None).update(Time_out = datetime.datetime.now())
-                #         if len(HallPass.objects.filter(destination = previous_destination).filter(Time_in = None).filter(Time_out = None)) > 0:
-                #             log = HallPass.objects.filter(destination = previous_destination).filter(Time_in = None).filter(Time_out = None)[0]
-                #             log.Time_in = datetime.datetime.now()
+                #     if len(HallPass.objects.filter(student_id = student).filter(time_out = None)) >= 1:
+                #         HallPass.objects.filter(student_id = student).filter(time_out = None).update(time_out = datetime.datetime.now())
+                #         if len(HallPass.objects.filter(destination = previous_destination).filter(time_in = None).filter(time_out = None)) > 0:
+                #             log = HallPass.objects.filter(destination = previous_destination).filter(time_in = None).filter(time_out = None)[0]
+                #             log.time_in = datetime.datetime.now()
                 #             log.save()
-                #         bathroomCount = len(HallPass.objects.filter(destination = d).exclude(Time_in = None).filter(Time_out = None))
+                #         bathroomCount = len(HallPass.objects.filter(destination = d).exclude(time_in = None).filter(time_out = None))
                             
                 #     if current_destination.max_people_allowed > bathroomCount:
                 #         return datetime.datetime.now()
@@ -151,7 +155,7 @@ def monitor_destinations(request):
                 #     student_id = student,
                 #     destination = d,
                 #     building = d.building,
-                #     Time_in = queueCheck(count, d)
+                #     time_in = queueCheck(count, d)
                 # )
 
                 # hallpass.save()
@@ -163,18 +167,18 @@ def monitor_destinations(request):
         # elif 'out' in request.POST['action']:
         #     log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
         #     student_logout_id = log_to_modify.student_id.student_id
-        #     count = len(HallPass.objects.filter(destination = log_to_modify.destination).exclude(Time_in = None).filter(Time_out = None))
-        #     hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(Time_out = datetime.datetime.now())
-        #     if log_to_modify.destination.max_people_allowed >= count and len(HallPass.objects.filter(destination = log_to_modify.destination).filter(Time_in = None).filter(Time_out = None)) > 0:
-        #         log = HallPass.objects.filter(destination = log_to_modify.destination).filter(Time_in = None).filter(Time_out = None)[0]
-        #         log.Time_in = datetime.datetime.now()
+        #     count = len(HallPass.objects.filter(destination = log_to_modify.destination).exclude(time_in = None).filter(time_out = None))
+        #     hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(time_out = datetime.datetime.now())
+        #     if log_to_modify.destination.max_people_allowed >= count and len(HallPass.objects.filter(destination = log_to_modify.destination).filter(time_in = None).filter(time_out = None)) > 0:
+        #         log = HallPass.objects.filter(destination = log_to_modify.destination).filter(time_in = None).filter(time_out = None)[0]
+        #         log.time_in = datetime.datetime.now()
         #         log.save()
 
        
 
         # elif 'in' in request.POST['action']:
         #     log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
-        #     log_to_modify.Time_in = datetime.datetime.now()
+        #     log_to_modify.time_in = datetime.datetime.now()
         #     log_to_modify.save()
 
 

@@ -41,13 +41,13 @@ class Destination(models.Model):
          return f"{self.room} Genderless" 
 
 class HallPass(models.Model):
-    Time_in = models.DateTimeField(blank=True, null=True)
-    Time_out = models.DateTimeField(blank=True, null=True)
+    time_in = models.DateTimeField(blank=True, null=True)
+    time_out = models.DateTimeField(blank=True, null=True)
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     destination = models.ForeignKey(Destination, null=True, on_delete=models.SET_NULL)
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    Arrival_time = models.DateTimeField(auto_now=True)
+    arrival_time = models.DateTimeField(auto_now=True)
     forgot_time_out = models.BooleanField(default=False)
 
     
@@ -57,7 +57,7 @@ class HallPass(models.Model):
 
     def __str__(self): 
            
-            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.Time_in}, Time_out: {self.Time_out}, Arrival_time: {self.Arrival_time}"
+            return f"Teacher: {self.user}, Destination: {self.destination}, Student: {self.student_id}, Time_in: {self.time_in}, Time_out: {self.time_out}, Arrival_time: {self.arrival_time}"
 
 class Profile(models.Model):
     destinations = models.ManyToManyField(Destination, blank=True)
