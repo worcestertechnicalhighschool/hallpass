@@ -8,38 +8,41 @@
     <section class="student-sign-in">
         <h2> {{ profile.building }}</h2>
 
-        <form id="student-field" action="" method="POST" autocomplete="off" class="student-sign-in-form">
+        <form id="student-field" action="{% url 'arrival' %}" method="POST" autocomplete="off" class="student-sign-in-form">
             {% csrf_token %} 
-            {% bootstrap_form form %}
+            {% bootstrap_form arrival_form exclude="destination_id" %}
+            <input type="hidden" name="arrival">
             <div class="button-group">
-                {% for destination in destinations %}
-                    <button name="action" value="Enter {{ destination.id }}" form="student-field" class="btn btn-secondary mx-3">{{ destination.category }}</button>
+                {% for queue in destination_data %}
+                    <button name="destination_id" value="{{ queue.destination.id }}" form="student-field" class="btn btn-secondary mx-3">{{ queue.destination.category }}</button>
                 {% endfor %}
             </div>
 
         </form>
     </section>
 
-    <section class="monitor-destinations" style="grid-template-columns: repeat({{ destinations.count }}, 350px);"> 
-        {% if destinations %}
-            {% for destination in destinations %}
-                <aside class="destination" style="background-color: {{ destination.category.color }}; color:{{ destination.category.text_color }}  ">
-                    <h3 class="destination-heading"><strong>{{ destination }}</strong> <br> <em>Max people: {{ destination.max_people_allowed }}</em></h3>
+    <section class="monitor-destinations" style="grid-template-columns: repeat({{ destination_data|length }}, 350px);"> 
+        {% if destination_data %}
+            {% for queue in destination_data %}
+                <aside class="destination" style="background-color: {{ queue.destination.category.color }}; color:{{ queue.destination.category.text_color }}  ">
+                    <h3 class="destination-heading"><strong>{{ queue.destination }}</strong> <br> <em>Max people: {{ queue.destination.max_people_allowed }}</em></h3>
                     <section class="destination-body">
-                        {% for log in destination.hallpass_set.all %}
-                            {% if not log.Time_out %}
+                            {% for log in queue.logs %}
                                 {% if not log.Time_in %}
                                     <div class="destination-log-disabled" >
                                         <div class="student">{{ log.student_id }}</div> 
                                         <div class="time-in">Arrival Time: {{ log.Arrival_time|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
                                         <div class="start-time" hidden>{{ log.Arrival_time.isoformat }}</div>
-                                        <form id="form-{{log.id}}" action="" method="POST">
+                                        <form action="{% url 'time_in' %}" method="POST">
                                             {% csrf_token %}
-                                            <button class="btn btn-primary" id="logOut" name="action" value ="In {{ log.id }}" >
+                                            <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
                                                 Time In
                                             </button>
-                                            <button class="btn btn-danger" id="logOut" name="action" value ="Cancel {{ log.id }}" >
+                                        </form>
+                                        <form action="{% url 'time_out' %}" method="POST">
+                                            {% csrf_token %}
+                                            <button class="btn btn-danger" name="log_id" value ="{{ log.id }}" >
                                                 Cancel
                                             </button>
                                         </form>
@@ -50,16 +53,15 @@
                                         <div class="time-in">Time In: {{ log.Time_in|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
                                         <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
-                                        <form id="form-{{log.id}}" action="" method="POST">
+                                        <form action="{% url 'time_out' %}" method="POST">
                                             {% csrf_token %}
-                                            <button class="btn btn-primary" id="logOut" name="action" value ="Out {{ log.id }}" >
-                                                Log Out
+                                            <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
+                                                Time Out
                                             </button>
                                         </form>
                                     </div>
-                                    {% endif %}
-                            {% endif %}
-                        {% endfor %}
+                                {% endif %}
+                            {% endfor %}
                     </section>
                 </aside>
             {% endfor %}
@@ -72,7 +74,9 @@
 
 {% block scripts %}
 <script>
-    document.querySelector('#id_student').focus();
+    // set focus on arrival form every time
+    document.querySelector('#id_student_id').focus();
+
     logs = document.querySelectorAll(".destination-log");
     minutesUntilWarning = 5;
 
