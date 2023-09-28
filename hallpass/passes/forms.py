@@ -4,14 +4,20 @@ from .models import Student, HallPass, Destination, Category, Profile
 from django.forms.widgets import TextInput
 from django.core.exceptions import ValidationError
 
-class CreateHallPassForm(forms.Form):
-    student = forms.CharField(max_length=6)
-    building = None
 
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
-        super(CreateHallPassForm, self).__init__(*args, **kwargs)
 
+
+
+class LogForm(forms.Form):
+    log_id = forms.CharField() # This is all we need to get cleaned_data from the form
+
+
+    
+class ArrivalForm(forms.Form):
+    student_id = forms.CharField(max_length=6)
+    destination_id = forms.CharField() # This is all we need to get cleaned_data from the form
+    
+    
     def clean_student(self):
         input_id = self.cleaned_data["student"]
         id_length = len(input_id)
@@ -28,8 +34,10 @@ class CreateHallPassForm(forms.Form):
             validate += "Must be a valid student ID"
             raise ValidationError(validate.split("/b"))
 
-        if student_query[0].building != self.request.user.profile.building:
-            validate += "Student must belong to current building"
+        # We can let kids go to the 
+        # bathroom if they are from another school 
+        # if student_query[0].building != self.request.user.profile.building:
+        #     validate += "Student must belong to current building"
             
         if (validate != ''):
             raise ValidationError(validate.split("/b"))

@@ -25,7 +25,27 @@
             row-gap: 20px;
             
             
+            .destination-log-disabled {
+                background-color: $disabled-log;
+                color: $pass-font-color;
+                padding: 20px;
+                width: 100%;
+                border-radius: $edge-rounding;
+                box-shadow: $drop-shadow;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                row-gap: 15px;
 
+                &.stopwatch-warning {
+                    background-color: #91060696;
+                }
+
+                .timer-display {
+                    font-size: 3em;
+                }
+            }
             .destination-log {
                 background-color: $pass-bg-color;
                 color: $pass-font-color;
