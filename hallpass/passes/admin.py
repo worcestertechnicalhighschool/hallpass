@@ -41,15 +41,15 @@ admin.site.register(Destination, DestinationImportExportAdmin)
 class HallPassAdminResource(resources.ModelResource):
     class Meta:
         model = HallPass
-        fields = ('id', 'student_id__student_id', 'destination__room', 'Time_in', 'Time_out', 'Arival_time')
+        fields = ('id', 'student_id__student_id', 'destination__room', 'time_in', 'time_out', 'arrival_time')
 
 
 class HallPassImportExportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = HallPassAdminResource
     
-    readonly_fields = ("Time_in","Time_out",'Arrival_time')
-    list_filter = ('Time_in', 'Time_out', "student_id", "destination", "building")
-    list_display = ('student_id', 'destination', 'Time_in', 'Time_out')
+    readonly_fields = ("time_in","time_out",'arrival_time','user')
+    list_filter = ('time_in', 'time_out', "student_id", "destination", "building", "user")
+    list_display = ('student_id', 'destination', 'time_in', 'time_out', 'user')
 
 admin.site.register(HallPass, HallPassImportExportAdmin)
 
