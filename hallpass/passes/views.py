@@ -53,33 +53,31 @@ def arrival(request):
     form = ArrivalForm(request.POST)
     if form.is_valid():
         student_id = form.cleaned_data['student_id']
-
-
-        # if (student_id not in Student.objects.filter(student_id)):
-        #     return redirect("monitor")
-        student = get_object_or_404(Student, student_id = student_id)
-        # checks to see if student forgot to log out
-        logs = HallPass.objects.filter(student_id = student).filter(time_out = None)
-        for l in logs:
-            l.time_out = datetime.datetime.now()# logs student out 
-            l.forgot_time_out = True
-            l.save()
-        # makes a new log
-        destination_id = form.cleaned_data['destination_id']
-        destination = get_object_or_404(Destination, pk = destination_id)
-        log = HallPass(
-            student_id = student,
-            destination = destination,
-            building = destination.building,
-            arrival_time = datetime.datetime.now(),
-            user = request.user,
-        )
-        # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
-        max = destination.max_people_allowed
-        count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
-        if count_in < max:
-            log.time_in = datetime.datetime.now()
-        log.save()
+    
+        if (Student.objects.filter(student_id = student_id).exists()):
+            student = get_object_or_404(Student, student_id = student_id)
+            # checks to see if student forgot to log out
+            logs = HallPass.objects.filter(student_id = student).filter(time_out = None)
+            for l in logs:
+                l.time_out = datetime.datetime.now()# logs student out 
+                l.forgot_time_out = True
+                l.save()
+            # makes a new log
+            destination_id = form.cleaned_data['destination_id']
+            destination = get_object_or_404(Destination, pk = destination_id)
+            log = HallPass(
+                student_id = student,
+                destination = destination,
+                building = destination.building,
+                arrival_time = datetime.datetime.now(),
+                user = request.user,
+            )
+            # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
+            max = destination.max_people_allowed
+            count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
+            if count_in < max:
+                log.time_in = datetime.datetime.now()
+            log.save()
         
     return redirect("monitor")
 
