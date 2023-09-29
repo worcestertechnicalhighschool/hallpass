@@ -21,26 +21,30 @@ class ArrivalForm(forms.Form):
     def clean_student(self):
         input_id = self.cleaned_data["student"]
         id_length = len(input_id)
-        validate = ''
+        validate = []
 
         if id_length != 6:
-            validate += "must be 6 numbers /b"
+            validate.append("must be 6 numbers /b")
             
         if not input_id.isnumeric():
-            validate += "Student Id's don't contain letters /b"
+            validate.append("Student Id's don't contain letters")
             
-        student_query = Student.objects.filter(student_id=input_id)
-        if len(student_query) <= 0:
-            validate += "Must be a valid student ID"
-            raise ValidationError(validate.split("/b"))
+        # student_query = Student.objects.filter(student_id=input_id)
+        # if len(student_query) <= 0:
+        #     validate += "Must be a valid student ID"
+        #     raise ValidationError(validate.split("/b"))
+
+        if Student.objects.filter(student_id=input_id).exists():
+            validate.append("This ID does not exist")
 
         # We can let kids go to the 
         # bathroom if they are from another school 
         # if student_query[0].building != self.request.user.profile.building:
         #     validate += "Student must belong to current building"
             
-        if (validate != ''):
-            raise ValidationError(validate.split("/b"))
+        if (len(validate) > 0):
+            raise ValidationError(validate)
+        
 
         return input_id
     

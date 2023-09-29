@@ -28,12 +28,12 @@
                     <h3 class="destination-heading"><strong>{{ queue.destination }}</strong> <br> <em>Max people: {{ queue.destination.max_people_allowed }}</em></h3>
                     <section class="destination-body">
                             {% for log in queue.logs %}
-                                {% if not log.Time_in %}
+                                {% if not log.time_in %}
                                     <div class="destination-log-disabled" >
                                         <div class="student">{{ log.student_id }}</div> 
                                         <div class="time-in">Arrival Time: {{ log.Arrival_time|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
-                                        <div class="start-time" hidden>{{ log.Arrival_time.isoformat }}</div>
+                                        <div class="start-time" hidden>{{ log.arrival_time.isoformat }}</div>
                                         <form action="{% url 'time_in' %}" method="POST">
                                             {% csrf_token %}
                                             <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
@@ -50,9 +50,9 @@
                                 {% else %}
                                     <div class="destination-log">
                                         <div class="student">{{ log.student_id }}</div> 
-                                        <div class="time-in">Time In: {{ log.Time_in|date:"h:i A" }}</div>
+                                        <div class="time-in">Time In: {{ log.time_in|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
-                                        <div class="start-time" hidden>{{ log.Time_in.isoformat }}</div>
+                                        <div class="start-time" hidden>{{ log.time_in.isoformat }}</div>
                                         <form action="{% url 'time_out' %}" method="POST">
                                             {% csrf_token %}
                                             <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
