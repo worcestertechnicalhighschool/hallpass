@@ -62,12 +62,13 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('building','destinations',)
         widgets = {
-            'building': forms.Select(attrs={'onchange':'this.form.submit()'})
+            'building': forms.Select(attrs={'onchange':'this.form.submit()'}) # This isn't best practice. We should use JS for this.
         }
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
-        self.destinations_choices = Destination.objects.filter(building = self.instance.building)
+        # Order_by sorts the choices by alpha.
+        self.destinations_choices = Destination.objects.filter(building = self.instance.building).order_by('room', 'category')
         self.fields['destinations'].queryset = self.destinations_choices
         self.fields['building'].label="Buildings"
 
