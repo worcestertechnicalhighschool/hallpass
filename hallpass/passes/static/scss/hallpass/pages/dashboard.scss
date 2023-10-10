@@ -1,10 +1,19 @@
 .dashboard {
     background-color: rgb(195, 209, 250);
-    max-width: 60vw;
+    max-width: 700px;
     padding: 20px;
     border-radius: 20px;
     margin: auto;
     margin-top: 50px;
+
+    #id_destinations {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .form-check {
+            padding: 20px;
+        }
+    }
 }
 
 .brand{

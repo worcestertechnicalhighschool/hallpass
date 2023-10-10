@@ -59,7 +59,7 @@ def arrival(request):
             # checks to see if student forgot to log out
             logs = HallPass.objects.filter(student_id = student).filter(time_out = None)
             for l in logs:
-                l.time_out = datetime.datetime.now()# logs student out 
+                l.time_out = datetime.datetime.now() # logs student out 
                 l.forgot_time_out = True
                 l.save()
             # makes a new log
@@ -84,7 +84,8 @@ def arrival(request):
 @login_required
 def monitor_destinations(request):
     user_profile = request.user.profile
-    user_destinations = user_profile.destinations.filter(building = user_profile.building)
+    user_destinations = user_profile.destinations.filter(building = user_profile.building).order_by('room', 'category')
+    # print(user_destinations)
     
     if not user_destinations:
         return redirect(reverse('dashboard'))
@@ -110,75 +111,6 @@ def monitor_destinations(request):
             'destination_data':destination_data,
         }
     )
-    # if count_in < max and count_waiting > 0:
-    #     log = HallPass.objects.filter(destination = destination).filter(time_in = None).filter(time_out = None)[0]
-    #     log.time_in = datetime.datetime.now()
-    #     log.save()
-    
-    # form = CreateHallPassForm(user_destinations = user_destinations)
-    # form = CreateHallPassForm()
-
-    # if request.method == 'POST':
-    #     form = CreateHallPassForm(request.POST)
-    #     hallpasses = HallPass.objects.filter(time_out = None)
-
-        # This form has several "action" elements that postback here.
-        # if 'enter' in request.POST['action']: # Should we create a hidden input for this? 
-        #     if form.is_valid(): 
-        #         # print(form.cleaned_data) # See the cleaned data!
-        #         destination_id = form.cleaned_data['action']
-        #         print(destination_id) # This contains the action and the DestID. Maybe we separate these?
-        #         d = Destination.objects.get(id = request.POST['action'].split(" ")[1])
-        #         count = len(HallPass.objects.filter(destination = d).exclude(time_in = None).filter(time_out = None))
-        #         student_id = form.cleaned_data['student']   
-        #         student = Student.objects.filter(student_id=student_id)[0]
-           
-                # def queueCheck(bathroomCount, destination):
-                #     previous_destination = None
-                #     if len(HallPass.objects.filter(student_id = student).filter(time_out = None)) > 0:
-                #         previous_destination = HallPass.objects.filter(student_id = student).filter(time_out = None)[0].destination
-                #     current_destination = destination
-                #     if len(HallPass.objects.filter(student_id = student).filter(time_out = None)) >= 1:
-                #         HallPass.objects.filter(student_id = student).filter(time_out = None).update(time_out = datetime.datetime.now())
-                #         if len(HallPass.objects.filter(destination = previous_destination).filter(time_in = None).filter(time_out = None)) > 0:
-                #             log = HallPass.objects.filter(destination = previous_destination).filter(time_in = None).filter(time_out = None)[0]
-                #             log.time_in = datetime.datetime.now()
-                #             log.save()
-                #         bathroomCount = len(HallPass.objects.filter(destination = d).exclude(time_in = None).filter(time_out = None))
-                            
-                #     if current_destination.max_people_allowed > bathroomCount:
-                #         return datetime.datetime.now()
-
-                # hallpass = HallPass(
-                #     student_id = student,
-                #     destination = d,
-                #     building = d.building,
-                #     time_in = queueCheck(count, d)
-                # )
-
-                # hallpass.save()
-
-                # # resets the form for another student
-                # form = CreateHallPassForm()
-                
-            
-        # elif 'out' in request.POST['action']:
-        #     log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
-        #     student_logout_id = log_to_modify.student_id.student_id
-        #     count = len(HallPass.objects.filter(destination = log_to_modify.destination).exclude(time_in = None).filter(time_out = None))
-        #     hallpasses.filter(student_id = Student.objects.filter(student_id = student_logout_id)[0]).update(time_out = datetime.datetime.now())
-        #     if log_to_modify.destination.max_people_allowed >= count and len(HallPass.objects.filter(destination = log_to_modify.destination).filter(time_in = None).filter(time_out = None)) > 0:
-        #         log = HallPass.objects.filter(destination = log_to_modify.destination).filter(time_in = None).filter(time_out = None)[0]
-        #         log.time_in = datetime.datetime.now()
-        #         log.save()
-
-       
-
-        # elif 'in' in request.POST['action']:
-        #     log_to_modify = get_object_or_404(HallPass, pk = request.POST['action'].split(" ")[1])    
-        #     log_to_modify.time_in = datetime.datetime.now()
-        #     log_to_modify.save()
-
 
 
 @login_required
@@ -190,8 +122,9 @@ def dashboard(request):
             profile_form.save()
 
             form = ArrivalForm()
-            user_profile = request.user.profile
-            user_destinations = user_profile.destinations.all()
+            # This code isn't doing anything
+            # user_profile = request.user.profile
+            # user_destinations = user_profile.destinations.all()
 
             return redirect(reverse('monitor'))
     else:

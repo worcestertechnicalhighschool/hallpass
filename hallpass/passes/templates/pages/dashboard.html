@@ -5,10 +5,13 @@
 <div class="dashboard">
     <h1> Select Destinations </h1>
 
-    <div class = "col-sm-6">
+    <div>
     <form action="" method="post" id="destination-form">
         {% csrf_token %}
-        {% bootstrap_form form %}
+        <div class="col-sm-6">
+          {% bootstrap_form form exclude='destinations' %}
+        </div>
+        {% bootstrap_form form exclude='building' %}
         <input type='hidden' name='next' value='{{ next }}' >
         {% buttons %}
         <button type="submit" class="btn btn-primary">
