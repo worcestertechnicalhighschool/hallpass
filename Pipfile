@@ -16,6 +16,7 @@ psycopg2-binary = "*"
 whitenoise = "*"
 django-wsgi = "*"
 django-allauth = "*"
+django-bootstrap5 = "*"
 
 [dev-packages]
 

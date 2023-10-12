@@ -35,6 +35,9 @@ class Destination(models.Model):
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     max_people_allowed = models.PositiveIntegerField(default = 2)
 
+    # for p in Destination.objects.raw("SELECT * FROM passes_destination"):
+    #     print(p)
+
     def __str__(self):
          if (self.category):
             return f"{self.room} {self.category.name}"
