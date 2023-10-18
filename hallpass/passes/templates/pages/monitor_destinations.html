@@ -8,16 +8,19 @@
     <section class="student-sign-in">
         <h2> {{ profile.building }}</h2>
 
-        <form id="student-field" action="{% url 'arrival' %}" method="POST" autocomplete="off" class="student-sign-in-form">
+        <form id="student-field" method="POST" autocomplete="off" class="student-sign-in-form">
             {% csrf_token %} 
             {% bootstrap_form arrival_form exclude="destination_id" %}
             <input type="hidden" name="arrival">
+            <div class="mb-3 notice">
+                <small>*If a student should be in the system, please contact <a href="mailto:leboeufj@worcesterschools.net?subject=HallPass Request - Add student">leboeufj@worcesterschools.net</a> with the name and ID of the student.</small>
+            </div>
             <div class="button-group">
+                {{ field.errors }}
                 {% for queue in destination_data %}
                     <button name="destination_id" value="{{ queue.destination.id }}" form="student-field" class="btn btn-secondary mx-3">{{ queue.destination.category }}</button>
                 {% endfor %}
             </div>
-
         </form>
     </section>
 
@@ -129,5 +132,17 @@
         }
         return ":00";  
     }
+
+    /**
+     * Append student id to contact email link. 
+     * This will auto insert any student ID that has been typed in the input field
+     * into the email href string for the subject.
+     */
+    const contactEmail = document.querySelector('.notice a');
+    let emailString = contactEmail.href;
+    document.querySelector('#id_student_id').addEventListener('input', (e) => {
+        let inputId = e.target.value;
+        contactEmail.href = `${emailString} ID: ${inputId}`;
+    })
 </script>
 {% endblock %}
