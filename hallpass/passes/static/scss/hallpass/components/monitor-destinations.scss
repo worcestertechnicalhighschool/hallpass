@@ -1,4 +1,6 @@
-
+.monitor {
+    height:100%;
+}
 .monitor-destinations {
     display: grid;
     width: 100%;
@@ -7,7 +9,7 @@
     justify-content: start;
     justify-content: safe center;
     column-gap: 20px;
-    // height: calc(100vh - 290px);
+    height: calc(100% - 200px);
     
     .destination {
         margin-bottom: 30px;
@@ -18,11 +20,20 @@
         width: 350px;
         .destination-body {
             overflow-y: auto;
-            height: calc(100vh - 350px);
+            // height: calc(100vh - 350px);
             align-items: center;
             display: flex;
             flex-direction: column;
             row-gap: 20px;
+
+            footer {
+                form {
+                    .btn, .form-select {
+                        border: white solid 1px;
+                    }
+                }
+                
+            }
             
             
             .destination-log-disabled {

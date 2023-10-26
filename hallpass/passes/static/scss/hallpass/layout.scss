@@ -14,6 +14,9 @@ body {
 h1 {
     color: $header-font-color;
 }
+a, a:visited {
+    color: $link-color;
+}
 
 body {
     background-color: $body-color;

@@ -25,9 +25,22 @@ def time_in(request):
 
 @login_required
 @require_http_methods(["POST"])
+def change_location(request):
+    form = LocationForm(request.POST)
+    if form.is_valid():
+        log_id = form.cleaned_data['log_id']
+        destination_id = form.cleaned_data['destination_id']
+
+        log = get_object_or_404(HallPass, pk = log_id)
+        destination = get_object_or_404(Destination, pk = destination_id)
+        log.destination = destination
+        log.save()
+    return redirect("monitor")
+
+@login_required
+@require_http_methods(["POST"])
 def time_out(request):
     form = LogForm(request.POST)
-    print(form)
     if form.is_valid():
         log_id = form.cleaned_data['log_id']
         log = get_object_or_404(HallPass, pk = log_id)
@@ -48,67 +61,70 @@ def time_out(request):
     return redirect("monitor")
 
 @login_required
-@require_http_methods(["POST"])
-def arrival(request):
-    form = ArrivalForm(request.POST)
-    if form.is_valid():
-        student_id = form.cleaned_data['student_id']
-    
-        if (Student.objects.filter(student_id = student_id).exists()):
-            student = get_object_or_404(Student, student_id = student_id)
-            # checks to see if student forgot to log out
-            logs = HallPass.objects.filter(student_id = student).filter(time_out = None)
-            for l in logs:
-                l.time_out = datetime.datetime.now() # logs student out 
-                l.forgot_time_out = True
-                l.save()
-            # makes a new log
-            destination_id = form.cleaned_data['destination_id']
-            destination = get_object_or_404(Destination, pk = destination_id)
-            log = HallPass(
-                student_id = student,
-                destination = destination,
-                building = destination.building,
-                arrival_time = datetime.datetime.now(),
-                user = request.user,
-            )
-            # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
-            max = destination.max_people_allowed
-            count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
-            if count_in < max:
-                log.time_in = datetime.datetime.now()
-            log.save()
-        
-    return redirect("monitor")
-
-@login_required
 def monitor_destinations(request):
+    # Users must have selected destinations 
+    # in their profile. If not, redirect user
     user_profile = request.user.profile
     user_destinations = user_profile.destinations.filter(building = user_profile.building).order_by('room', 'category')
-    # print(user_destinations)
-    
     if not user_destinations:
         return redirect(reverse('dashboard'))
     
+    # Set form
     arrival_form = ArrivalForm()
+
+    # Deal with submitted arrival form
+    if request.method == "POST":
+        arrival_form = ArrivalForm(request.POST)
+        if arrival_form.is_valid():
+            student_id = arrival_form.cleaned_data['student_id']
+
+            # Retrieve the student from the database
+            if (Student.objects.filter(student_id = student_id).exists()):
+                student = get_object_or_404(Student, student_id = student_id)
+                # check to see if student forgot to log out
+                logs = HallPass.objects.filter(student_id = student).filter(time_out = None)
+                for l in logs:
+                    l.time_out = datetime.datetime.now() # logs student out 
+                    l.forgot_time_out = True
+                    l.save()
+                # makes a new log
+                destination_id = arrival_form.cleaned_data['destination_id']
+                destination = get_object_or_404(Destination, pk = destination_id)
+                log = HallPass(
+                    student_id = student,
+                    destination = destination,
+                    building = destination.building,
+                    arrival_time = datetime.datetime.now(),
+                    user = request.user,
+                )
+                # I'VE TEMP DISABLED THIS FOR USER TESTING
+                # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
+                # max = destination.max_people_allowed
+                # count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
+                # if count_in < max:
+                #     log.time_in = datetime.datetime.now()
+
+                log.save()
+                # Log created successfully. Reset the form
+                arrival_form = ArrivalForm()
+                
+    # Prepare the data for the template
     destination_data = []
     for destination in user_destinations:
         logs = HallPass.objects.filter(destination = destination).filter(time_out = None)
         destination_data.append(
             {
-                "destination":destination,
-                "logs":logs,
+                "destination": destination,
+                "logs": logs,
             }
         )
-        # print(destination_data)
     return render(
         request,
-        'pages/student_login.html',
+        'pages/monitor_destinations.html',
         {
             'arrival_form': arrival_form,
             'profile': user_profile,
-            # 'destinations': user_destinations,
-            'destination_data':destination_data,
+            'destination_data': destination_data,
         }
     )
 
@@ -120,12 +136,6 @@ def dashboard(request):
 
         if profile_form.is_valid():
             profile_form.save()
-
-            form = ArrivalForm()
-            # This code isn't doing anything
-            # user_profile = request.user.profile
-            # user_destinations = user_profile.destinations.all()
-
             return redirect(reverse('monitor'))
     else:
         profile_form = ProfileForm(instance=request.user.profile)

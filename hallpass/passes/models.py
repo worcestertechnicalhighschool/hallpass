@@ -12,8 +12,8 @@ class Building(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    color = models.CharField(max_length=7, default='')
-    text_color = models.CharField(max_length=7, default='')
+    color = models.CharField(max_length=7, default='#eeeeee')
+    text_color = models.CharField(max_length=7, default='#000000')
     class Meta:
         verbose_name_plural = "categories"
 

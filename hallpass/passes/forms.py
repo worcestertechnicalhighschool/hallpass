@@ -11,31 +11,31 @@ from django.core.exceptions import ValidationError
 class LogForm(forms.Form):
     log_id = forms.CharField() # This is all we need to get cleaned_data from the form
 
+class LocationForm(forms.Form):
+    log_id = forms.CharField() # This is all we need to get cleaned_data from the form
+    destination_id = forms.CharField() # This is all we need to get cleaned_data from the form
+
 
     
 class ArrivalForm(forms.Form):
     student_id = forms.CharField(max_length=6)
     destination_id = forms.CharField() # This is all we need to get cleaned_data from the form
     
-    
-    def clean_student(self):
-        input_id = self.cleaned_data["student"]
+    # This function contains the custom validation 
+    # for the student_if field
+    def clean_student_id(self):
+        input_id = self.cleaned_data["student_id"]
         id_length = len(input_id)
         validate = []
 
         if id_length != 6:
-            validate.append("must be 6 numbers /b")
+            validate.append("IDs must be 6 numbers")
             
         if not input_id.isnumeric():
-            validate.append("Student Id's don't contain letters")
-            
-        # student_query = Student.objects.filter(student_id=input_id)
-        # if len(student_query) <= 0:
-        #     validate += "Must be a valid student ID"
-        #     raise ValidationError(validate.split("/b"))
+            validate.append("IDs cannot contain letters")
 
-        if Student.objects.filter(student_id=input_id).exists():
-            validate.append("This ID does not exist")
+        if not Student.objects.filter(student_id=input_id).exists():
+            validate.append("This ID is not in our system.")
 
         # We can let kids go to the 
         # bathroom if they are from another school 
@@ -44,7 +44,6 @@ class ArrivalForm(forms.Form):
             
         if (len(validate) > 0):
             raise ValidationError(validate)
-        
 
         return input_id
     
