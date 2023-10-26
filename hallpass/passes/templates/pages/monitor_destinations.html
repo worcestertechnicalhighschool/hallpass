@@ -6,7 +6,7 @@
 
 <div class="monitor row">
     <section class="student-sign-in">
-        <h2> {{ profile.building }}</h2>
+        <h2>{{ profile.building }}</h2>
 
         <form id="student-field" method="POST" autocomplete="off" class="student-sign-in-form">
             {% csrf_token %} 
@@ -37,18 +37,41 @@
                                         <div class="time-in">Arrival Time: {{ log.Arrival_time|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
                                         <div class="start-time" hidden>{{ log.arrival_time.isoformat }}</div>
-                                        <form action="{% url 'time_in' %}" method="POST">
-                                            {% csrf_token %}
-                                            <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
-                                                Time In
-                                            </button>
-                                        </form>
-                                        <form action="{% url 'time_out' %}" method="POST">
-                                            {% csrf_token %}
-                                            <button class="btn btn-danger" name="log_id" value ="{{ log.id }}" >
-                                                Cancel
-                                            </button>
-                                        </form>
+                                        <footer class="d-flex flex-wrap justify-content-around align-items-end">
+                                            
+                                            <form action="{% url 'time_in' %}" method="POST" class="flex-grow-1 px-1">
+                                                {% csrf_token %}
+                                                <button class="btn btn-primary" style="width:100%" name="log_id" value ="{{ log.id }}" >
+                                                    Time In
+                                                </button>
+                                            </form>
+                                            <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
+                                                {% csrf_token %}
+                                                <button class="btn btn-danger" style="width:100%" name="log_id" value ="{{ log.id }}" >
+                                                    Cancel
+                                                </button>
+                                            </form>
+
+
+
+                                            <form action="{% url 'change_location' %}" method="POST" class="flex-grow-1 px-1 mt-2" style="width:100%">
+                                                {% csrf_token %}
+                                                <div class="input-group">
+                                                    <select class="form-select" id="inputGroupSelect02" name="destination_id">
+                                                        <option selected>Move to...</option>
+                                                        {% for queue in destination_data %}
+                                                        <option value="{{ queue.destination.id }}">{{ queue.destination }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <button class="btn btn-secondary" type="submit" name="log_id" value ="{{ log.id }}">Go</button>
+                                                </div>                                            
+                                            </form>
+                                        </footer>
+
+
+
+
+                                        
                                     </div>
                                 {% else %}
                                     <div class="destination-log">
@@ -56,12 +79,26 @@
                                         <div class="time-in">Time In: {{ log.time_in|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
                                         <div class="start-time" hidden>{{ log.time_in.isoformat }}</div>
-                                        <form action="{% url 'time_out' %}" method="POST">
-                                            {% csrf_token %}
-                                            <button class="btn btn-primary" name="log_id" value ="{{ log.id }}" >
-                                                Time Out
-                                            </button>
-                                        </form>
+                                        <footer class="d-flex flex-wrap justify-content-around align-items-end">
+                                            <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
+                                                {% csrf_token %}
+                                                <button class="btn btn-primary" style="width:50%" name="log_id" value ="{{ log.id }}" >
+                                                    Time Out
+                                                </button>
+                                            </form>
+                                            <form action="{% url 'change_location' %}" method="POST" class="flex-grow-1 px-1 mt-2" style="width:100%">
+                                                {% csrf_token %}
+                                                <div class="input-group">
+                                                    <select class="form-select" id="inputGroupSelect02" name="destination_id">
+                                                        <option selected>Move to...</option>
+                                                        {% for queue in destination_data %}
+                                                        <option value="{{ queue.destination.id }}">{{ queue.destination }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <button class="btn btn-secondary" type="submit" name="log_id" value ="{{ log.id }}">Go</button>
+                                                </div>                                            
+                                            </form>
+                                        </footer>
                                     </div>
                                 {% endif %}
                             {% endfor %}

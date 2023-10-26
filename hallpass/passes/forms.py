@@ -11,6 +11,10 @@ from django.core.exceptions import ValidationError
 class LogForm(forms.Form):
     log_id = forms.CharField() # This is all we need to get cleaned_data from the form
 
+class LocationForm(forms.Form):
+    log_id = forms.CharField() # This is all we need to get cleaned_data from the form
+    destination_id = forms.CharField() # This is all we need to get cleaned_data from the form
+
 
     
 class ArrivalForm(forms.Form):

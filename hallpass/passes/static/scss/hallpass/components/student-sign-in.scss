@@ -4,8 +4,16 @@
     justify-content: start;
     align-items: center;
     padding: 15px 10px;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    margin-bottom: 20px;
+    background-color: rgba(233, 235, 236, 0.9);
+    
     h2 {
         text-align: center;
+        margin-top: -74px;
+        margin-bottom: 35px;
     }
     .student-sign-in-form {
         display: inline-block;
