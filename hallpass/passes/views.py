@@ -19,6 +19,8 @@ def time_in(request):
     if form.is_valid():
         log_id = form.cleaned_data['log_id']
         log = get_object_or_404(HallPass, pk = log_id)
+        if log.time_in:
+            return redirect("monitor")
         log.time_in = datetime.datetime.now()
         log.save()
     return redirect("monitor")
