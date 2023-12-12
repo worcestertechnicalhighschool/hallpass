@@ -66,6 +66,7 @@ class Profile(models.Model):
     destinations = models.ManyToManyField(Destination, blank=True)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     building = models.ForeignKey(Building, null=True, on_delete=models.SET_NULL)
+    queue = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.user}, {self.building},"
