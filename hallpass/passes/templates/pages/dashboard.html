@@ -13,9 +13,9 @@
         <div class="col-sm-6">
           {% bootstrap_form form exclude='destinations,queue' %}
         </div>
-        <div class="col-sm-6">
-        {% bootstrap_form form exclude='building,queue' %}
-        </div>
+        <hr>
+        {% bootstrap_form form exclude='building,queue' %}     
+        <hr>
         <div class="form-check form-switch" style="padding-left: .7em;">
         {% bootstrap_form form exclude='building,destinations' %}
         </div>
