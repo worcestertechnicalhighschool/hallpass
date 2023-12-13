@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
 {% load socialaccount %}
+{% load static %}
 
 {% block content %}
-
-<!-- <p><em>The student monitoring system/<em></p> -->
 
 <div class="login">
 <h2>Get started</h2>
@@ -17,11 +16,10 @@
 {% load socialaccount %}
 <form class="d-inline" id="login" action="{% provider_login_url 'google' %}" method="post">
     {% csrf_token %}
-    <div class="login-button">
-    <button class="btn btn-outline-primary w-100" type="submit">
-        <img style="width: 25px" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google logo">
-        Login with Google
-    </button>
+    <div class="login-button d-flex justify-content-center">
+        <button class="btn p-0" type="submit">
+            <img src="{% static '/images/web_light_sq_SI.svg' %}" alt="Sign in with Google">
+        </button>
 </div>
 <p class = "login-terms">By signing up, you agree to the <a href="{% url 'terms' %}" >Terms of Use</a> and <a href="{% url 'privacy' %}" >Privacy Policy</a>, including Cookie Use.</p>
 
