@@ -101,10 +101,13 @@ def monitor_destinations(request):
                 )
                 # I'VE TEMP DISABLED THIS FOR USER TESTING
                 # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
-                # max = destination.max_people_allowed
-                # count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
-                # if count_in < max:
-                #     log.time_in = datetime.datetime.now()
+                queue = Profile.objects.filter(user = request.user)[0].queue
+                print(queue)
+                if queue:
+                    max = destination.max_people_allowed
+                    count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
+                    if count_in < max:
+                        log.time_in = datetime.datetime.now()
 
                 log.save()
                 # Log created successfully. Reset the form
@@ -142,6 +145,6 @@ def dashboard(request):
     else:
         profile_form = ProfileForm(instance=request.user.profile)
 
-    return render(request, 'pages/dashboard.html', { 'form': profile_form, })
+    return render(request, 'pages/dashboard.html', { 'form': profile_form,})
 
 

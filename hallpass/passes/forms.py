@@ -3,9 +3,7 @@ from django.forms import ModelForm
 from .models import Student, HallPass, Destination, Category, Profile
 from django.forms.widgets import TextInput
 from django.core.exceptions import ValidationError
-
-
-
+from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 
 
 class LogForm(forms.Form):
@@ -59,9 +57,11 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('building','destinations',)
+        fields = ('building','destinations','queue')
         widgets = {
-            'building': forms.Select(attrs={'onchange':'this.form.submit()'}) # This isn't best practice. We should use JS for this.
+            'building': forms.Select(attrs={'onchange':'this.form.submit()'}),
+            'queue': forms.CheckboxInput(attrs={"class": "form-check-input", "id": "flexSwitchCheckChecked"})
+             # This isn't best practice. We should use JS for this.
         }
 
     def __init__(self, *args, **kwargs):
