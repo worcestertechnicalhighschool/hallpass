@@ -17,6 +17,7 @@ whitenoise = "*"
 django-wsgi = "*"
 django-allauth = "*"
 django-bootstrap5 = "*"
+django-toggle-switch-widget = "*"
 
 [dev-packages]
 
