@@ -102,7 +102,7 @@ def monitor_destinations(request):
                 # I'VE TEMP DISABLED THIS FOR USER TESTING
                 # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
                 queue = Profile.objects.filter(user = request.user)[0].queue
-                print(queue)
+                
                 if queue:
                     max = destination.max_people_allowed
                     count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
