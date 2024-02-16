@@ -14,9 +14,6 @@ body {
 h1 {
     color: $header-font-color;
 }
-a, a:visited {
-    color: $link-color;
-}
 
 body {
     background-color: $body-color;
@@ -24,4 +21,28 @@ body {
 
 .site-footer {
     background-color: $navbar-color;
+    color: $primary;
 }
+
+.navbar {
+    background-color: $navbar-color;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: $link-color;
+    text-decoration: none;
+    transition: $soft;
+    &:hover, &:focus, &:active {
+        color: $primary-hover;
+    }
+}
+
+.nav-link {
+    color: $link-color;
+    text-decoration: none;
+    transition: $soft;
+    &:hover, &:focus, &:active {
+        color: $primary-hover;
+    }
+}
+

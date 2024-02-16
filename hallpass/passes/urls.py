@@ -10,7 +10,7 @@ urlpatterns = [
     path("time_out", views.time_out, name='time_out'),
     path("time_in", views.time_in, name='time_in'),
     path("change_location", views.change_location, name='change_location'),
-
+    path("front_page", views.front_page, name='front_page'),
 
     # Static Pages required for OAuth and SEO
     path('about/', vs.about, name='about'),

@@ -15,14 +15,15 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% sass_src 'scss/style.scss' %}">
   </head>
   <body>
    
     <header>
-        <nav class="navbar  navbar-light bg-light"> 
+        <nav class="navbar navbar-dark"> 
           <div class="container-fluid">
             <h1 class="brand"><a href="{% url 'home' %}">HallPass</a></h1>
             {% if request.user.is_authenticated %} 
