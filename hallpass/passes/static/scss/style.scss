@@ -5,10 +5,11 @@
 // Components
 @import "hallpass/components/student-sign-in.scss";
 @import "hallpass/components/buttons.scss";
-@import "hallpass/components/monitor-destinations.scss";
 @import "hallpass/components/brand.scss";
+@import "hallpass/components/sidenav.scss";
 
 // Pages
 @import "hallpass/pages/login.scss";
 @import "hallpass/pages/dashboard.scss";
 @import "hallpass/pages/front-page.scss";
+@import "hallpass/pages/monitor-destinations.scss";

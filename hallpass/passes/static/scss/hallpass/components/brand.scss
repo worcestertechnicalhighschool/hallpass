@@ -1,11 +1,11 @@
-.brand{
-    font-family: "Roboto", semorif;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 45px;
+.brand {
 }
 
 .brand a{
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 45px;
     color: $primary;
     text-decoration: none;
     transition: $soft;
