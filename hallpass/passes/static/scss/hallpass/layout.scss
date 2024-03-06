@@ -16,6 +16,7 @@ h1 {
     font-family: "Roboto", sans-serif;
     font-weight: 900;
     font-style: italic;
+    font-size: 3rem;
 }
 
 body {
@@ -47,3 +48,6 @@ a,p,label {
   transition: $soft;
 }
 
+svg {
+    max-width: 65px;
+}

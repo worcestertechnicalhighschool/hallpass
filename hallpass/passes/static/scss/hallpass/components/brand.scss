@@ -8,8 +8,10 @@
     font-size: 45px;
     color: $primary;
     text-decoration: none;
-    transition: $soft;
+    transition: 0s;
+    opacity: 0;
     &:hover, &:focus, &:active {
         color: $primary-hover;
+
     }
 }
