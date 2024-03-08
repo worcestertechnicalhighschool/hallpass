@@ -54,8 +54,9 @@
             <hr>
             {% if request.user.is_authenticated %} 
                 <ul class="navbar-nav">
+                  <a class="nav-link" aria-current="page" href="{% url 'dashboard' %}">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'dashboard' %}">Select Destinations</a>
+                    <p class="nav-text" aria-current="page" href="{% url 'dashboard' %}">Select Destinations</p>
                     <svg version="1.1" id="svg_SD" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 168.37 166.35" style="enable-background:new 0 0 168.37 166.35;" xml:space="preserve">
                  <style type="text/css">
@@ -78,8 +79,9 @@
                      C103.11,16.29,86.82,0,66.72,0c-20.1,0-36.38,16.29-36.38,36.39C30.36,56.48,46.64,72.76,66.73,72.78z"/>
                  </g>
                  </svg>
-                 
                   </li>
+                </a>
+                
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'monitor' %}">Monitor Destinations</a>     
                     <svg version="1.1" id="svg_MD" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
