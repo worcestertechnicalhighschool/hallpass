@@ -2,7 +2,7 @@
     position: fixed;
     background-color: $navbar-color;
     transition: width 600ms ease;
-    overflow: scroll;
+    overflow: hidden;
     color: $link-color;
     text-decoration: none;
     transition: $soft;
@@ -10,6 +10,7 @@
     &:hover, &:focus, &:active {
         color: $primary-hover;
     }
+
 }
 .navbar-nav {
     list-style: none;
@@ -19,7 +20,7 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
-  }
+}
 
 .nav-link {
     color: $link-color;
@@ -33,10 +34,23 @@
         transition: 0.1s;
     }
 }
+.nav-link .nav-item p {
+  color: $link-color;
+  opacity: 0;
+  text-decoration: none;
+  transition: $soft;
+  overflow: visible;
+  white-space: nowrap;
+  &:hover, &:focus, &:active {
+      color: $primary-hover;
+      transition: 0.1s;
+  }
+}
 
 
 .nav-item a {
-  margin: 0; padding: 0;
+  margin: 0; 
+  padding: 0;
   transition: 0s;
 }
 
@@ -121,11 +135,6 @@ margin-top: auto;
       opacity: 1;
     }
 
-    .navbar:hover .nav-item svg {
-      order: 1;
-      left: 100%;
-    }
-
     .navbar:hover .logo svg
     {
       margin-left: 0rem;
@@ -143,4 +152,9 @@ margin-top: auto;
       opacity: 1;
       color: $primary;
     }
+
+    .nav-item:hover .nav-text {
+      color: $primary;
+    }
+    
   } 
