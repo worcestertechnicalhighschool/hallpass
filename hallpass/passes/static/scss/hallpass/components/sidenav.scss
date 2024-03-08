@@ -35,6 +35,10 @@
     }
 }
 
+.nav-button .nav-item {
+  justify-content: space-between;
+}
+
 .nav-button .nav-item .nav-text {
   margin: 0; 
   padding: 0;
@@ -44,6 +48,7 @@
   color: $link-color;
   overflow: visible;
   white-space: nowrap;
+  text-align: center;
 }
 
 .nav-button .nav-item {
