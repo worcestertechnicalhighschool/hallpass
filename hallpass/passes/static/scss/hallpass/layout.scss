@@ -13,9 +13,10 @@ body {
 
 h1 {
     color: $header-font-color;
-}
-a, a:visited {
-    color: $link-color;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 3rem;
 }
 
 body {
@@ -24,4 +25,29 @@ body {
 
 .site-footer {
     background-color: $navbar-color;
+    color: $primary;
+
+}
+
+a,p,label {
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.fa-secondary {
+    color: #ffe03c;
+  }
+
+  .fa-primary {
+    color: #ffe03c;
+  }
+.fa-primary,
+.fa-secondary {
+  transition: $soft;
+}
+
+svg {
+    max-width: 65px;
 }

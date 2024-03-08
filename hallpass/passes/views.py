@@ -144,7 +144,10 @@ def dashboard(request):
             return redirect(reverse('monitor'))
     else:
         profile_form = ProfileForm(instance=request.user.profile)
-
     return render(request, 'pages/dashboard.html', { 'form': profile_form,})
 
 
+def front_page(request):
+    if request.method == 'POST':
+        pass
+    return render(request, 'pages/front_page.html', {})
