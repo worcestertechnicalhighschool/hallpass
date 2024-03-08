@@ -2,7 +2,7 @@
     position: fixed;
     background-color: $navbar-color;
     transition: width 600ms ease;
-    overflow: hidden;
+    overflow: scroll;
     color: $link-color;
     text-decoration: none;
     transition: $soft;
@@ -10,15 +10,15 @@
     &:hover, &:focus, &:active {
         color: $primary-hover;
     }
-
 }
+
 .navbar-nav {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     height: 100%;
 }
 
@@ -30,41 +30,32 @@
     overflow: visible;
     white-space: nowrap;
     &:hover, &:focus, &:active {
-        color: $primary-hover;
-        transition: 0.1s;
-    }
-}
-.nav-link .nav-item p {
-  color: $link-color;
-  opacity: 0;
-  text-decoration: none;
-  transition: $soft;
-  overflow: visible;
-  white-space: nowrap;
-  &:hover, &:focus, &:active {
       color: $primary-hover;
       transition: 0.1s;
-  }
+    }
 }
 
-
-.nav-item a {
+.nav-button .nav-item .nav-text {
   margin: 0; 
   padding: 0;
   transition: 0s;
+  opacity: 0;
+  text-decoration: none!important;
+  color: $link-color;
+  overflow: visible;
+  white-space: nowrap;
 }
 
-.nav-item {
+.nav-button .nav-item {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  align-self: left;
   gap: 4em;
   margin-bottom: 1rem;
   svg {
     order: -1;
     min-width: 65px;
   }
-  
   #svg_SD {
     margin-left: 15px;
   }
@@ -99,7 +90,7 @@ margin-top: auto;
     width: 100%;
     display: flex;
 }
-  
+
 .logo svg {
     transform: rotate(0deg);
     transition: var(--transition-speed);
@@ -114,25 +105,31 @@ margin-top: auto;
 
 .footer-content p {
   opacity: 0;
+  color: $primary;
 }
 
 @media only screen and (min-width: 600px) {
     .navbar {
       top: 0;
-      width: 5rem;
+      width: 6.5rem;
       height: 100vh;
     }
   
     .navbar:hover {
-      width: 16rem;
+      width: 18rem;
     }
 
     .navbar:hover .logo svg{
       order: 1;
     }
 
-    .navbar:hover .nav-link {
+    .navbar:hover .nav-button{
       opacity: 1;
+    }
+
+    .navbar:hover .nav-item svg {
+
+      left: 100%;
     }
 
     .navbar:hover .logo svg
@@ -147,14 +144,26 @@ margin-top: auto;
       transition: 0.5s;
     }
 
-    .navbar:hover p
-    {
+    .navbar:hover .nav-text{
       opacity: 1;
-      color: $primary;
     }
 
-    .nav-item:hover .nav-text {
-      color: $primary;
+    .navbar .nav-button:hover
+    {
+      .nav-text {
+      color: $primary-hover;
+      }
     }
-    
-  } 
+
+    .navbar:hover
+    {
+      .nav-link {
+       opacity: 1;
+      }
+    }
+    .navbar:hover .footer-content p {
+      opacity: 1;
+
+    }
+
+} 

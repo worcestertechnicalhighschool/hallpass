@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{% sass_src 'scss/style.scss' %}">
   </head>
   <body>
-   
+    {% if request.user.is_authenticated %} 
     <header>
         <nav class="navbar"> 
           <div class="container-fluid">
@@ -52,11 +52,10 @@
           </svg>
         </li>
             <hr>
-            {% if request.user.is_authenticated %} 
                 <ul class="navbar-nav">
-                  <a class="nav-link" aria-current="page" href="{% url 'dashboard' %}">
+                  <a class="nav-button" aria-current="page" href="{% url 'dashboard' %}">
                   <li class="nav-item">
-                    <p class="nav-text" aria-current="page" href="{% url 'dashboard' %}">Select Destinations</p>
+                    <span class="nav-text">Select Destinations</span>
                     <svg version="1.1" id="svg_SD" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 168.37 166.35" style="enable-background:new 0 0 168.37 166.35;" xml:space="preserve">
                  <style type="text/css">
@@ -82,8 +81,9 @@
                   </li>
                 </a>
                 
+                <a class="nav-button" href="{% url 'monitor' %}">
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'monitor' %}">Monitor Destinations</a>     
+                    <span class="nav-text">Monitor Destinations</span>     
                     <svg version="1.1" id="svg_MD" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 134.61 157.05" style="enable-background:new 0 0 134.61 157.05;" xml:space="preserve">
                  <style type="text/css">
@@ -109,10 +109,12 @@
                      c0.7-1.23,1.12-2.66,1.12-4.21C75.72,85.09,71.96,81.33,67.31,81.33z"/>
                  </g>
                  </svg>
-                    
                   </li>
+                  </a>
+
+                  <a class="nav-button" href="{% url 'logout' %}?next={{ request.path }}">
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>  
+                    <span class="nav-text">Logout</span>  
                     <svg version="1.1" id="svg_L" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 166.63 165.01" style="enable-background:new 0 0 166.63 165.01;" xml:space="preserve">
                  <style type="text/css">
@@ -129,8 +131,9 @@
                  </svg>
                   </li>
                   {% if request.user.is_staff %}
+                  <a class="nav-button" href="{% url 'admin:index' %}">
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a> 
+                    <span class="nav-text">Admin</span> 
                     <svg version="1.1" id="svg_A" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     viewBox="0 0 150.87 166.48" style="enable-background:new 0 0 150.87 166.48;" xml:space="preserve">
                  <style type="text/css">
@@ -147,6 +150,7 @@
                    c0.88,0.7,22.81,18.24,61.58,21.93l0.35,0.35C137.71,74.56,126.48,101.75,113.5,119.99z"/>
                  </svg> 
                   </li>
+                  </a>
                   {% endif %}
                 </ul>
             {% endif %}
