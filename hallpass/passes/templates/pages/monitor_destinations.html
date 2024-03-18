@@ -6,11 +6,13 @@
 
 <div class="monitor row">
     <section class="student-sign-in">
-        <h2>{{ profile.building }}</h2>
 
         <form id="student-field" method="POST" autocomplete="off" class="student-sign-in-form">
             {% csrf_token %} 
+            <div class="tep">
+            <h1>{{ profile.building }}</h1>
             {% bootstrap_form arrival_form exclude="destination_id" %}
+            </div>
             <input type="hidden" name="arrival">
             <div class="mb-3 notice">
                 <small>*If a student should be in the system, please contact <a href="mailto:leboeufj@worcesterschools.net?subject=HallPass Request - Add student">leboeufj@worcesterschools.net</a> with the name and ID of the student.</small>
