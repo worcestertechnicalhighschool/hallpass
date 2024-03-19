@@ -1,3 +1,59 @@
-.front-page{
-  background-color: #5f5d5d;  
+.home {
+  background-color: #2D2C2C;
+  
 }
+.front-page {
+  text-align: center;
+
+  .front-page-header {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    svg {
+      margin-bottom: 0.5em;
+      width: 10em;
+    }
+  }
+
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    svg {
+      width: 1em;
+      margin-left: 10px;
+    }
+    .format {
+      display: flex;
+      gap: 0.5em;
+    }
+  }
+
+  .list {
+    color: #FFE03B;
+    font-family: "Roboto", sans-serif;
+  }
+
+  #main{
+    font-family: "Roboto", sans-serif;
+    color: $primary;
+
+
+  }
+
+  .flex-container{
+    font-family: "Oswald", sans-serif;
+
+
+  }
+
+
+
+hr{
+  color: $primary;
+  opacity: 1;
+
+}
+
+}
+
