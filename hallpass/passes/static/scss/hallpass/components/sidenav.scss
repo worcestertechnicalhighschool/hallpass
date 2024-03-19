@@ -2,6 +2,8 @@
     position: fixed;
     background-color: $navbar-color;
     transition: width 600ms ease;
+    overflow:hidden;
+    z-index: 1;
     overflow: hidden;
     color: $link-color;
     text-decoration: none;
