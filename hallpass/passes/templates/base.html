@@ -25,8 +25,9 @@
     <header>
         <nav class="navbar"> 
           <div class="container-fluid">
+            <a href="{% url 'home' %}">
             <li class="logo">
-              <h1 class="brand"><a href="{% url 'home' %}">HALLPASS</a></h1>
+              <h1 class="brand">HALLPASS</h1>
               <svg
               aria-hidden="true"
               focusable="false"
@@ -51,7 +52,7 @@
             </g>
           </svg>
         </li>
-            <hr>
+      </a>
                 <ul class="navbar-nav">
                   <a class="nav-button" aria-current="page" href="{% url 'dashboard' %}">
                   <li class="nav-item">

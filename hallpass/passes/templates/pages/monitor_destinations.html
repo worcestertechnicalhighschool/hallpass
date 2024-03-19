@@ -9,7 +9,7 @@
 
         <form id="student-field" method="POST" autocomplete="off" class="student-sign-in-form">
             {% csrf_token %} 
-            <div class="tep">
+            <div class="id-input">
             <h1>{{ profile.building }}</h1>
             {% bootstrap_form arrival_form exclude="destination_id" %}
             </div>
@@ -20,7 +20,7 @@
             <div class="button-group">
                 {{ field.errors }}
                 {% for queue in destination_data %}
-                    <button name="destination_id" value="{{ queue.destination.id }}" form="student-field" class="btn btn-secondary mx-3">{{ queue.destination.category }}</button>
+                    <button name="destination_id" value="{{ queue.destination.id }}" form="student-field" class="btn btn-secondary mx-3" style="background-color: {{ queue.destination.category.color }}; color:{{ queue.destination.category.text_color }}  ">{{ queue.destination.category }}</button>
                 {% endfor %}
             </div>
         </form>
@@ -30,7 +30,7 @@
         {% if destination_data %}
             {% for queue in destination_data %}
                 <aside class="destination" style="background-color: {{ queue.destination.category.color }}; color:{{ queue.destination.category.text_color }}  ">
-                    <h3 class="destination-heading"><strong>{{ queue.destination }}</strong> <br> <em>Max people: {{ queue.destination.max_people_allowed }}</em></h3>
+                    <div class="destination-heading" style="background-color: {{ queue.destination.category.color }};"><h2>{{ queue.destination }}</h2> <br> <em>Max people: {{ queue.destination.max_people_allowed }}</em></div>
                     <section class="destination-body">
                             {% for log in queue.logs %}
                                 {% if not log.time_in %}

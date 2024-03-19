@@ -143,13 +143,23 @@ margin-top: auto;
     {
       margin-left: 0rem;
     }
-  
+
+    .navbar:hover .logo .brand
+    {
+      opacity: 1;
+    }
+    
     .navbar:hover .brand a
     {
       left: 0px;
       opacity: 1;
       transition: 0.5s;
     }
+
+    .logo:hover .brand{
+      color: $primary-hover;
+
+  }
 
     .navbar:hover .nav-text{
       opacity: 1;

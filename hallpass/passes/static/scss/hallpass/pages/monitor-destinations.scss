@@ -18,6 +18,23 @@
         border-radius: $edge-rounding;
         box-shadow: $drop-shadow;
         width: 350px;
+        max-height: 900px;
+        overflow: scroll;
+        .destination-heading {
+            display: flex;
+            justify-content: space-evenly;
+            margin-bottom: 2em;
+            padding-right: 5.5em;
+            padding-top: 2em;
+            padding-left: 2em;
+            position: fixed;
+            em {
+                background-color: gray;
+                border-radius: 2em;
+                color: $primary;
+                padding: .5em;
+            }
+        }
         .destination-body {
             overflow-y: auto;
             // height: calc(100vh - 350px);
