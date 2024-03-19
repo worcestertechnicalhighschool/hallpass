@@ -2,7 +2,7 @@
     position: fixed;
     background-color: $navbar-color;
     transition: width 600ms ease;
-    overflow: scroll;
+    overflow: hidden;
     color: $link-color;
     text-decoration: none;
     transition: $soft;
