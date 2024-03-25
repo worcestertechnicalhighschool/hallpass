@@ -1,7 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 from .forms import ContactForm
 from django.core.mail import send_mail
+
+def home(request):
+    return render(request, 'pages/front_page.html', {})
+
+def sign_in(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    return render(request, 'index.html')
 
 def privacy(request):
     return render(request, "pages/privacy.html")
