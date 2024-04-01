@@ -9,8 +9,7 @@ import datetime
 import string
 from django.views.decorators.http import require_http_methods
 
-def home(request):
-    return render(request, 'index.html', {})
+
 
 @login_required
 @require_http_methods(["POST"])
@@ -147,7 +146,3 @@ def dashboard(request):
     return render(request, 'pages/dashboard.html', { 'form': profile_form,})
 
 
-def front_page(request):
-    if request.method == 'POST':
-        pass
-    return render(request, 'pages/front_page.html', {})
