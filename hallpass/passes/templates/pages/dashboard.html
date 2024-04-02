@@ -3,22 +3,27 @@
 
 {% block content %}
 <div class="dashboard">
-  <div>
     <h1> Select Destinations </h1>
-  </div>
 
     <div>
     <form action="" method="post" id="destination-form">
         {% csrf_token %}
-        <div class="col-sm-6">
+        <hr>
+        <div>
+          <h2>Building</h2>
           {% bootstrap_form form exclude='destinations,queue' %}
         </div>
         <hr>
-        {% bootstrap_form form exclude='building,queue' %}     
+        <div >
+          <h2>Destinations</h2>
+          {% bootstrap_form form exclude='building,queue' %}  
+        </div>   
         <hr>
-        <div class="form-check form-switch" style="padding-left: .7em;">
-        {% bootstrap_form form exclude='building,destinations' %}
+        <div class="form-check form-switch" >
+          <h2>Queue</h2>
+          {% bootstrap_form form exclude='building,destinations' %}
         </div>
+        <hr>
         <input type='hidden' name='next' value='{{ next }}' >
         {% buttons %}
         <button type="submit" class="btn btn-primary">
