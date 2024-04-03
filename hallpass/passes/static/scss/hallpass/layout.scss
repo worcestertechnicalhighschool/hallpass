@@ -29,11 +29,12 @@ body {
 
 }
 
-a,p,label,span,h2 {
+a,p,label,span,h2,em{
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
     font-weight: 200;
     font-style: normal;
+    text-decoration: none;
 }
 
 .fa-secondary {
