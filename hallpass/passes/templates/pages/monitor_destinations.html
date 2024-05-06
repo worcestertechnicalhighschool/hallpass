@@ -30,7 +30,8 @@
         {% if destination_data %}
             {% for queue in destination_data %}
                 <aside class="destination">
-                    <div class="destination-heading" style="color: {{ queue.destination.category.color }};"><h2>{{ queue.destination }}</h2> <br> <em class="max">Max {{ queue.destination.max_people_allowed }}</em> <br> <em class="in">In {{ queue.people_in }}</em> <br> <em class="waiting">Waiting {{ queue.queue }}</em></div>
+                    <div class="destination-heading" style="color: {{ queue.destination.category.color }};"><h2>{{ queue.destination }}</h2>
+                    <div class="labels"><em class="max">Max {{ queue.destination.max_people_allowed }}</em> <br> <em class="in">In {{ queue.people_in }}</em> <br> <em class="waiting">Waiting {{ queue.queue }}</em></div>
                     <hr>
                     <section class="destination-body">
                             {% for log in queue.logs %}
