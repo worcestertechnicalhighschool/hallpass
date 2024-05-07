@@ -154,22 +154,22 @@
                   </a>
                   {% endif %}
                 </ul>
-            {% endif %}
-            {% if not request.user.is_authenticated %}
-            <a href="{% url 'home' %}" class="nav-link">Sign In</a>
-            {% endif %}
-          </div>
-          <div class="footer-content">
-            <a href="{% url 'help' %}" class="nav-link">Need Help?</a>
-            <a href="{% url 'contact' %}" class="nav-link">Contact Us</a>
-            <a href="{% url 'privacy' %}" class="nav-link">Privacy Policy</a>
-            <a href="{% url 'terms' %}" class="nav-link">Terms of Use</a>
-            <p>&copy; {% now 'Y' %} HallPass.tech</p>
-          </div>
-        </nav> 
-      </header>
-      <main class="container-fluid">
-        {% block content %}{% endblock %}
-      </main>     
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'home' %}" class="nav-link">Sign In</a>
+                {% endif %}
+              </div>
+              <div class="footer-content">
+                <a href="{% url 'help' %}" class="nav-link">Need Help?</a>
+                <a href="{% url 'contact' %}" class="nav-link">Contact Us</a>
+                <a href="{% url 'privacy' %}" class="nav-link">Privacy Policy</a>
+                <a href="{% url 'terms' %}" class="nav-link">Terms of Use</a>
+                <p>&copy; {% now 'Y' %} HallPass.tech</p>
+              </div>
+            </nav> 
+          </header>
+          {% endif %}
+          <main class="container-fluid">
+            {% block content %}{% endblock %}
+          </main>     
   </body>
 </html>
