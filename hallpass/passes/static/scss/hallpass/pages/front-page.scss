@@ -1,8 +1,5 @@
-.home {
-  background-color: #2D2C2C;
-  
-}
 .front-page {
+  background-color: #2D2C2C;
   text-align: center;
 
   .front-page-header {
@@ -16,6 +13,7 @@
   }
 
   .flex-container {
+    color: #DBD9D9;
     display: flex;
     justify-content: center;
     gap: 3em;
@@ -47,6 +45,9 @@
 
   }
 
+  .bottom-half{
+    background-color: #DBD9D9;
+  }
 
 
 hr{
@@ -56,4 +57,3 @@ hr{
 }
 
 }
-
