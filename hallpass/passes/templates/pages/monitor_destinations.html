@@ -74,7 +74,7 @@
                                         <div class="student">{{ log.student_id }}</div> 
                                         <div class="time-in">Time In: {{ log.time_in|date:"h:i A" }}</div>
                                         <div class="timer-display"> &nbsp; </div>
-                                        <div class="start-time" hidden>{{ log.time_in.isoformat }}</div>
+                                        <div class="start-time" hidden>{{ log.time_in|date:'Y-m-d H:i:s'}}</div>
                                         <footer class="d-flex flex-wrap justify-content-around align-items-end">
                                             <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
                                                 {% csrf_token %}
@@ -106,8 +106,6 @@
 
 </div><!-- /monitor -->
    
-{% endblock %}
-
 {% block scripts %}
 <script>
     // set focus on arrival form every time
@@ -115,9 +113,9 @@
 
     logs = document.querySelectorAll(".destination-log");
     minutesUntilWarning = 5;
-
     setInterval(() => {     
         logs.forEach(log => {
+
             let display = log.querySelector(".timer-display");
             let startTime = log.querySelector(".start-time");
 
@@ -178,4 +176,5 @@
         contactEmail.href = `${emailString} ID: ${inputId}`;
     })
 </script>
+{% endblock %}
 {% endblock %}
