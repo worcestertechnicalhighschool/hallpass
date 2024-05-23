@@ -1,6 +1,11 @@
 .front-page {
   background-color: #2D2C2C;
+
+  
+    
+
   text-align: center;
+  
   padding-bottom: 0.5em;
 
   .preview-img{
@@ -32,12 +37,26 @@
 
   .front-page-header {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    
     gap: 1em;
     svg {
       margin-bottom: 0.5em;
       width: 10em;
     }
+    .sign{
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px;
+      font-size: 40px;
+      color: $primary;
+      margin-left: 20em;
+
+    }
+    
+
+
+
   }
 
   .flex-container {
