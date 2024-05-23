@@ -51,6 +51,14 @@
       font-size: 40px;
       color: $primary;
       margin-left: 20em;
+      text-decoration: none;
+      transition: $soft;
+      overflow: visible;
+      white-space: nowrap;
+      &:hover, &:focus, &:active {
+      color: $primary-hover;
+      transition: 0.1s;
+      }
 
     }
     
