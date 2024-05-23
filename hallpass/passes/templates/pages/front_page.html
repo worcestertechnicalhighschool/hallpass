@@ -2,7 +2,9 @@
 {% block page_tag %}home{%endblock%}
 
 {% block content %}
+
 <div class="front-page">
+{% if not request.user.is_authenticated %} 
 <header>
     <div class="front-page-header">
     <h1>HALLPASS</h1>
@@ -28,71 +30,164 @@
           class="fa-primary"
         ></path>
       </g>
+      
     </svg>
+    <a class="sign" href="{% url 'sign_in' %}" >Sign In</a>
     </div>
     <hr>
     <div class="flex-container">
-        <div class="format">
-        <svg
-        aria-hidden="true"
-        focusable="false"
-        data-prefix="fad"
-        data-icon="angle-double-right"
-        role="img"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 448 512"
-        class="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
-        >
-      <g class="fa-group">
-        <path
-          fill="currentColor"
-          d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
-          class="fa-secondary"
-        ></path>
-        <path
-          fill="currentColor"
-          d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
-          class="fa-primary"
-        ></path>
-      </g>
-    </svg>
-        <h2>Contact Us</h2> 
-    </div>
-    <div class="format"> 
-        <svg
-        aria-hidden="true"
-        focusable="false"
-        data-prefix="fad"
-        data-icon="angle-double-right"
-        role="img"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 448 512"
-        class="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
-        >
-      <g class="fa-group">
-        <path
-          fill="currentColor"
-          d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
-          class="fa-secondary"
-        ></path>
-        <path
-          fill="currentColor"
-          d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
-          class="fa-primary"
-        ></path>
-      </g>
-    </svg>
 
-        <h2>Sign In</h2>
-    </div>
-    </div>
-</header>
-    <div class="list">
-    <h2>Efficient</h2>
-    <h2>Intuitive</h2>
-    <h2>Effective.</h2>
+
     </div>
     
+  </header>
+  {% endif %}
+
+  <div class="preview-img">
+    
+    <ul>
+      <li>Efficient.</li>
+      <li>Intuitive.</li>
+      <li>Effective.</li>
+    </ul>
+    
+    <img src="static/images/Screenshot 2024-05-06 at 1.02.51 PM.png" alt="Preview of Monitor Destinations">
+
+  </div>
+    
     <h2 id="main">Join other schools using HallPass for their student movement needs.</h2>
+    <div class="bottom-half">
+    
+    
+    
+    
+    
+    
+    <h2 class="msg">Trusted Partners</h2>
+    <img src = "static/images/wps-logo.svg" alt="Worcester Public Schools Logo" class="wps-logo"/>
+    <img src = "static/images/wths-eagle-new-dk.svg" alt="Worcester Technical High Logo" class="wths-logo"/>
+    
+    
+      
+    </div>
+    {% if not request.user.is_authenticated %} 
+    <div class="footer-content">
+  
+    <ul> 
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        data-prefix="fad"
+        data-icon="angle-double-right"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+        class="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
+        >
+      <g class="fa-group">
+        <path
+          fill="currentColor"
+          d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
+          class="fa-secondary"
+        ></path>
+        <path
+          fill="currentColor"
+          d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
+          class="fa-primary"
+        ></path>
+      </g>
+    </svg>
+      <a href="{% url 'help' %}" class="nav-link">Need Help?</a>
+
+    </ul>
+    <ul>
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        data-prefix="fad"
+        data-icon="angle-double-right"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+        class="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
+        >
+      <g class="fa-group">
+        <path
+          fill="currentColor"
+          d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
+          class="fa-secondary"
+        ></path>
+        <path
+          fill="currentColor"
+          d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
+          class="fa-primary"
+        ></path>
+      </g>
+    </svg>
+      <a href="{% url 'contact' %}" class="nav-link">Contact Us</a>
+      
+    </ul>
+    <ul>
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        data-prefix="fad"
+        data-icon="angle-double-right"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+        class="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
+        >
+      <g class="fa-group">
+        <path
+          fill="currentColor"
+          d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
+          class="fa-secondary"
+        ></path>
+        <path
+          fill="currentColor"
+          d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
+          class="fa-primary"
+        ></path>
+      </g>
+    </svg>
+      <a href="{% url 'privacy' %}" class="nav-link">Privacy Policy</a>
+
+    </ul>
+    <ul>
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        data-prefix="fad"
+        data-icon="angle-double-right"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+        class="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
+        >
+      <g class="fa-group">
+        <path
+          fill="currentColor"
+          d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
+          class="fa-secondary"
+        ></path>
+        <path
+          fill="currentColor"
+          d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
+          class="fa-primary"
+        ></path>
+      </g>
+    </svg>
+      <a href="{% url 'terms' %}" class="nav-link">Terms of Use</a>
+      
+    </ul>
+    </div>
+    <hr>
+    <p class="copyright">&copy; {% now 'Y' %} HallPass.tech</p>
 </div>
+{% endif %}
+
+
+
+</body>
 {% endblock %}
