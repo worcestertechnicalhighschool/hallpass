@@ -4,22 +4,28 @@
     justify-content: start;
     align-items: center;
     padding: 15px 10px;
-    position: sticky;
-    z-index: 999;
     top: 0;
     margin-bottom: 20px;
-    background-color: rgba(233, 235, 236, 0.9);
-    
-    h2 {
-        text-align: center;
-        margin-top: -74px;
-        margin-bottom: 35px;
+
+    label {
+        display: none;
     }
+
+    h1 {
+        font-family: "Roboto", sans-serif;
+        font-weight: 900;
+        font-style: italic;
+        font-size: 1.9rem;
+        color: $primary;
+        text-transform: uppercase;
+    }
+
     .student-sign-in-form {
         display: inline-block;
         min-width: 420px;
         margin: auto;
     }
+
     .notice {
         font-style: italic;
         margin-top: -8px;

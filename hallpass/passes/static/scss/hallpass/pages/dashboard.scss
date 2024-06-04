@@ -1,17 +1,40 @@
 .dashboard {
-    background-color: rgb(195, 209, 250);
+    background-color: $navbar-color;
+    color: $primary;
     max-width: 700px;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: auto;
     margin-top: 50px;
+
+    div {
+        padding: 1em;
+        h2 {
+            color: $primary;
+        }
+    }
+
+    .form-label {
+        display: none;
+    }
+
+    .form-check {
+        gap: 0px;
+
+        .form-check-input {
+            margin-left: 0;
+        }
+
+        #flexSwitchCheckChecked + label {
+            display: none;
+        }
+
+    }
+
 
     #id_destinations {
         display: grid;
         justify-content: space-around;
-        .form-check {
-            padding: 20px;
-        }
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 
@@ -78,9 +101,4 @@
         border-radius: 50%;
     }
     
-}
-
-.brand{
-    font-family: Trajan;
-    font-size: 45px;
 }

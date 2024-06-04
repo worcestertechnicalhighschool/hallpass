@@ -3,14 +3,18 @@ from . import views
 from . import views_static as vs
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('dashboard', views.dashboard, name='dashboard'), # CHANGE name to dashboard
+    # home page
+    path("", vs.home, name='home'),
+
+    # Sign in form
+    path('sign-in', vs.sign_in, name='sign_in'),
+
+    # Major User features
+    path('dashboard', views.dashboard, name='dashboard'),
     path('monitor_destinations', views.monitor_destinations, name='monitor'),
-    # path('arrival', views.arrival, name='arrival'),
     path("time_out", views.time_out, name='time_out'),
     path("time_in", views.time_in, name='time_in'),
     path("change_location", views.change_location, name='change_location'),
-
 
     # Static Pages required for OAuth and SEO
     path('about/', vs.about, name='about'),

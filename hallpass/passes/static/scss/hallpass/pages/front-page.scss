@@ -1,0 +1,197 @@
+.front-page {
+  background-color: #2D2C2C;
+
+  
+    
+
+  text-align: center;
+  
+  padding-bottom: 0.5em;
+
+  .preview-img{
+    display: flex;
+    justify-content: center;
+    li{
+      font-family: "Roboto", sans-serif ;
+      font-optical-sizing: auto;
+      font-weight: 200;
+      font-size: 40px;
+      font-style: italic;
+      text-decoration: none;
+      padding-right: 2em;
+      padding-top: 0%;
+      padding-bottom: 4em;
+      
+    }
+
+    img{
+      width: 35em;
+      border-color: black;
+      border-style: solid;
+      border-radius: 15px;
+      border-width: 5px;
+    }
+
+  }
+
+
+  .front-page-header {
+    display: flex;
+    justify-content: flex-end;
+    
+    gap: 1em;
+    svg {
+      margin-bottom: 0.5em;
+      width: 10em;
+    }
+    .sign{
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px;
+      font-size: 40px;
+      color: $primary;
+      margin-left: 20em;
+      text-decoration: none;
+      transition: $soft;
+      overflow: visible;
+      white-space: nowrap;
+      &:hover, &:focus, &:active {
+      color: $primary-hover;
+      transition: 0.1s;
+      }
+
+    }
+    
+
+
+
+  }
+
+  .flex-container {
+    color: #DBD9D9;
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    svg {
+      width: 1em;
+      margin-left: 10px;
+    }
+    .format {
+      display: flex;
+      gap: 0.5em;
+    }
+  }
+
+  ul {
+    color: #FFE03B;
+    font-family: "Roboto", sans-serif;
+    padding-top: 5em;
+    list-style-type: none;
+    
+  }
+
+  #main{
+    font-family: "Roboto", sans-serif;
+    color: $primary;
+    margin-top: 3em;
+    margin-bottom: 3em;
+
+  }
+
+  .flex-container{
+    font-family: "Oswald", sans-serif;
+
+
+  }
+
+  .bottom-half{
+    background-color: #DBD9D9;
+  }
+
+
+hr{
+  color: $primary;
+  opacity: 1;
+
+}
+
+.front-page-header{
+
+h1{
+margin-bottom: 0em;
+
+
+}
+
+
+
+}
+
+.bottom-half {
+  h2 {
+  font-family: "Roboto", sans-serif;
+  color: black;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 0em;
+  }
+
+  .wps-logo {
+    width: 25em;
+    padding-right: 3.5em;
+  }
+  .wths-logo {
+    width: 25em;
+    padding-left: 3.5em;
+  }
+}
+
+.footer-content {
+  display: block;
+  margin-left: 1rem;
+  a{
+    text-align: left;
+    
+    color: $primary;
+    text-decoration: none;
+    transition: $soft;
+    overflow: visible;
+    white-space: nowrap;
+    &:hover, &:focus, &:active {
+      color: $primary-hover;
+      transition: 0.1s;
+    }
+    padding-left: 0px;
+    
+    
+  }
+
+  ul{
+    display: flex;
+    padding: 0em;
+    padding-left: 1em!important;
+    gap: 1em;
+    svg {
+      margin-bottom: 0.5em;
+      width: 1em;
+      margin-top: 15px;
+    }
+  }
+  
+
+  }
+
+.copyright{
+    color: $primary;
+    text-align: left;
+    padding-left: 2.1em;
+
+}
+
+
+}
+.container-fluid{
+padding-right: 0;
+padding-left: 0;
+
+}

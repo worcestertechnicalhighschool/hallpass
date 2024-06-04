@@ -9,8 +9,7 @@ import datetime
 import string
 from django.views.decorators.http import require_http_methods
 
-def home(request):
-    return render(request, 'index.html', {})
+
 
 @login_required
 @require_http_methods(["POST"])
@@ -102,7 +101,6 @@ def monitor_destinations(request):
                 # I'VE TEMP DISABLED THIS FOR USER TESTING
                 # Check if MAX_ALLOWED has been met yet. If not, time_in immediately
                 queue = Profile.objects.filter(user = request.user)[0].queue
-                
                 if queue:
                     max = destination.max_people_allowed
                     count_in = len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None))
@@ -121,6 +119,8 @@ def monitor_destinations(request):
             {
                 "destination": destination,
                 "logs": logs,
+                "people_in": len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None)),
+                "queue": len(HallPass.objects.filter(destination = destination).filter(time_out = None)) - len(HallPass.objects.filter(destination = destination).exclude(time_in = None).filter(time_out = None)),
             }
         )
     return render(
@@ -144,7 +144,6 @@ def dashboard(request):
             return redirect(reverse('monitor'))
     else:
         profile_form = ProfileForm(instance=request.user.profile)
-
     return render(request, 'pages/dashboard.html', { 'form': profile_form,})
 
 

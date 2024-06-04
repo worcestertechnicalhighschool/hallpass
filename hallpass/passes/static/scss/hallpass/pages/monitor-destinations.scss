@@ -10,7 +10,6 @@
     justify-content: safe center;
     column-gap: 20px;
     height: calc(100% - 200px);
-    
     .destination {
         margin-bottom: 30px;
         text-align: center;
@@ -18,14 +17,52 @@
         border-radius: $edge-rounding;
         box-shadow: $drop-shadow;
         width: 350px;
+        max-height: 900px;
+        overflow: hidden;
+        background-color: $navbar-color;
+        .labels {
+            display: flex;
+            justify-content: space-evenly;
+            .in {
+                background-color: #ccaa00;
+            }
+            .max {
+                background-color: #5F5D5D;
+            }
+            .waiting {
+                background-color: #A80000;
+            }
+        }
+        .destination-heading {
+            padding-top: 1em;
+            justify-content: center;
+            em {
+                border-radius: 2em;
+                color: $primary;
+                line-height: .9;
+                padding: 7px;
+                height: 30px;
+                margin-top: 5px;
+                box-shadow: $drop-shadow;
+            }
+            h2 {
+                overflow: scroll;
+                overflow-y: hidden;
+                height: 78px;
+            }
+        }
         .destination-body {
+            padding-bottom: 6em;
             overflow-y: auto;
             // height: calc(100vh - 350px);
             align-items: center;
             display: flex;
             flex-direction: column;
             row-gap: 20px;
-
+            overflow: scroll;
+            height: 49.5em;
+            border-radius: $edge-rounding;
+            opacity: .85;
             footer {
                 form {
                     .btn, .form-select {
@@ -42,7 +79,6 @@
                 padding: 20px;
                 width: 100%;
                 border-radius: $edge-rounding;
-                box-shadow: $drop-shadow;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -63,7 +99,6 @@
                 padding: 20px;
                 width: 100%;
                 border-radius: $edge-rounding;
-                box-shadow: $drop-shadow;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
