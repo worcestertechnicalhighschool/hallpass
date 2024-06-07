@@ -4,6 +4,8 @@ from .forms import ContactForm
 from django.core.mail import send_mail
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     return render(request, 'pages/front_page.html', {})
 
 def sign_in(request):

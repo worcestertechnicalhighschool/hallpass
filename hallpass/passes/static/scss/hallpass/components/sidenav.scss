@@ -1,85 +1,95 @@
 .navbar {
-    position: fixed;
-    background-color: $navbar-color;
-    transition: width 600ms ease;
-    overflow:hidden;
-    z-index: 1;
-    overflow: hidden;
+  position: fixed;
+  background-color: $navbar-color;
+  transition: width 600ms ease;
+  overflow: hidden;
+  z-index: 1;
+  overflow: hidden;
+  color: $link-color;
+  text-decoration: none;
+  transition: $soft;
+  align-items: start;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $primary-hover;
+  }
+
+  .navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    height: 100%;
+  }
+
+  .nav-link {
     color: $link-color;
     text-decoration: none;
     transition: $soft;
-    align-items: start;
-    &:hover, &:focus, &:active {
-        color: $primary-hover;
+    opacity: 0;
+    overflow: visible;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $primary-hover;
+      transition: 0.1s;
     }
-    .navbar-nav {
-        list-style: none;
-        padding: 0;
+  }
+
+  .nav-button {
+
+    .nav-item {
+      justify-content: space-between;
+      width: 100%;
+      display: flex;
+      align-self: left;
+      gap: 4em;
+      margin-bottom: 1rem;
+
+      svg {
+        order: -1;
+        min-width: 65px;
+        margin-left: 50px;
+      }
+
+      #svg_SD {
+        margin-left: 15px;
+      }
+
+      #svg_MD {
+        margin-left: 10px;
+      }
+
+      #svg_L {
+        margin-left: 0px;
+      }
+
+      #svg_A {
+        margin-left: 10px;
+      }
+
+      .nav-text {
         margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        height: 100%;
-    }
-    
-    .nav-link {
+        padding: 0;
+        transition: 0s;
+        text-decoration: none !important;
         color: $link-color;
-        text-decoration: none;
-        transition: $soft;
-        opacity: 0;
         overflow: visible;
         white-space: nowrap;
-        &:hover, &:focus, &:active {
-          color: $primary-hover;
-          transition: 0.1s;
-        }
-    }
-    
-    .nav-button { 
-    
-      .nav-item {
-        justify-content: space-between;
-        width: 100%;
-        display: flex;
-        align-self: left;
-        gap: 4em;
-        margin-bottom: 1rem;
-        svg {
-          order: -1;
-          min-width: 65px;
-        }
-        #svg_SD {
-          margin-left: 15px;
-        }
-        
-        #svg_MD {
-          margin-left: 10px;
-        }  
-        
-        #svg_L {
-          margin-left: 0px;
-        }  
-        
-        #svg_A {
-          margin-left: 10px;
-        }
-    
-        .nav-text {
-          margin: 0; 
-          padding: 0;
-          transition: 0s;
-          text-decoration: none!important;
-          color: $link-color;
-          overflow: visible;
-          white-space: nowrap;
-          text-align: center;
-        }
-      }
-    
-      .nav-item:last-child {
-        margin-top: auto;
+        text-align: center;
       }
     }
+
+    .nav-item:last-child {
+      margin-top: auto;
+    }
+  }
 }
 
 
@@ -95,6 +105,7 @@
   letter-spacing: 0.3ch;
   width: 100%;
   display: flex;
+
   svg {
     transform: rotate(0deg);
     transition: var(--transition-speed);
@@ -106,78 +117,77 @@
 .footer-content {
   align-self: end;
   margin-left: 1rem;
+
   p {
     opacity: 0;
     color: $primary;
   }
 
   @media only screen and (min-width: 600px) {
-      .navbar {
-        top: 0;
-        width: 6.5rem;
-        height: 100vh;
-      }
-    
-      .navbar:hover {
-        width: 18rem;
-      }
-  
-      .navbar:hover .logo svg{
-        order: 1;
-      }
-  
-      .navbar:hover .nav-button{
-        opacity: 1;
-      }
-  
-      .navbar:hover .nav-item svg {
-  
-        left: 100%;
-      }
-  
-      .navbar:hover .logo svg
-      {
-        margin-left: 0rem;
-      }
-  
-      .navbar:hover .logo .brand
-      {
-        opacity: 1;
-      }
-      
-      .navbar:hover .brand a
-      {
-        left: 0px;
-        opacity: 1;
-        transition: 0.5s;
-      }
-  
-      .logo:hover .brand{
-        color: $primary-hover;
-  
+    .navbar {
+      top: 0;
+      width: 6.5rem;
+      height: 100vh;
     }
-  
-      .navbar:hover .nav-text{
-        opacity: 1;
-      }
-  
-      .navbar .nav-button:hover
-      {
-        .nav-text {
+
+    .navbar:hover {
+      width: 18rem;
+    }
+
+    .navbar:hover .logo svg {
+      order: 1;
+    }
+
+    .navbar:hover .nav-button {
+      opacity: 1;
+    }
+
+    .navbar:hover .nav-item svg {
+
+      left: 100%;
+    }
+
+    .navbar:hover .logo svg {
+      margin-left: 0rem;
+    }
+
+    .navbar:hover .logo .brand {
+      opacity: 1;
+    }
+
+    .navbar:hover .brand a {
+      left: 0px;
+      opacity: 1;
+      transition: 0.5s;
+    }
+
+    .logo:hover .brand {
+      color: $primary-hover;
+
+    }
+
+    .navbar:hover .nav-text {
+      opacity: 1;
+    }
+
+    .navbar .nav-button:hover {
+      .nav-text {
         color: $primary-hover;
-        }
       }
-  
-      .navbar:hover .nav-link {
-         opacity: 1;
-      }
-      .navbar:hover .footer-content p {
-        opacity: 1;
-  
-      }
-  
-  } 
+    }
+
+    .navbar:hover .nav-link {
+      opacity: 1;
+    }
+
+    .navbar:hover .footer-content p {
+      opacity: 1;
+
+    }
+
+  }
 }
+
 // .nav-button .nav-item .nav-text {
 //   margin: 0; 
 //   padding: 0;
@@ -200,92 +210,89 @@
 //     order: -1;
 //     min-width: 65px;
 @media only screen and (min-width: 600px) {
-    .navbar {
-      top: 0;
-      width: 6.5rem;
-      height: 100vh;
-    }
-  
-    .navbar:hover {
-      width: 18rem;
-    }
+  .navbar {
+    top: 0;
+    width: 6.5rem;
+    height: 100vh;
+  }
 
-    .navbar:hover .logo svg{
-      order: 1;
-    }
+  .navbar:hover {
+    width: 18rem;
+  }
 
-    .navbar:hover .nav-button{
-      opacity: 1;
-    }
+  .navbar:hover .logo svg {
+    order: 1;
+  }
 
-    .navbar:hover .nav-item svg {
+  .navbar:hover .nav-button {
+    opacity: 1;
+  }
 
-      left: 100%;
-    }
+  .navbar:hover .nav-item svg {
 
-    .navbar:hover .logo svg
-    {
-      margin-left: 0rem;
-    }
+    left: 100%;
+  }
 
-    .navbar:hover .logo .brand
-    {
-      opacity: 1;
-    }
-    
-    .navbar:hover .brand a
-    {
-      left: 0px;
-      opacity: 1;
-      transition: 0.5s;
-    }
+  .navbar:hover .logo svg {
+    margin-left: 0rem;
+  }
 
-    .logo:hover .brand{
-      color: $primary-hover;
+  .navbar:hover .logo .brand {
+    opacity: 1;
+  }
+
+  .navbar:hover .brand a {
+    left: 0px;
+    opacity: 1;
+    transition: 0.5s;
+  }
+
+  .logo:hover .brand {
+    color: $primary-hover;
 
   }
 
-    .navbar:hover .nav-text{
-      opacity: 1;
-    }
+  .navbar:hover .nav-text {
+    opacity: 1;
+  }
 
-    .navbar .nav-button:hover
-    {
-      .nav-text {
+  .navbar .nav-button:hover {
+    .nav-text {
       color: $primary-hover;
-      }
     }
+  }
 
-    .navbar:hover
-    {
-      .nav-link {
-       opacity: 1;
-      }
-    }
-    .navbar:hover .footer-content p {
+  .navbar:hover {
+    .nav-link {
       opacity: 1;
-
     }
+  }
 
-} 
+  .navbar:hover .footer-content p {
+    opacity: 1;
+
+  }
+
+}
+
 //   }
 //   #svg_SD {
 //     margin-left: 15px;
 //   }
-  
+
 //   #svg_MD {
 //     margin-left: 10px;
 //   }  
-  
+
 //   #svg_L {
 //     margin-left: 0px;
 //   }  
-  
+
 //   #svg_A {
 //     margin-left: 10px;
 //   }
 // }
-  
+
 // .nav-item:last-child {
 // margin-top: auto;
 // }
