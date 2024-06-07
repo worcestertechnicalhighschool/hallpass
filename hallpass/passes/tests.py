@@ -28,3 +28,7 @@ class HallPassTests(TestCase):
     def test_timein(self):
         testpass = HallPass.objects.create(student_id = self.student, destination = self.br, user = self.user, time_in = datetime.now())   
         self.assertTrue(testpass.time_in)
+
+    def test_timeout(self):
+        testpass = HallPass.objects.create(student_id = self.student, destination = self.br, user = self.user, time_out = datetime.now())   
+        self.assertTrue(testpass.time_out)

@@ -1,111 +1,126 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
 
-{% block content  %}
+{% block content %}
 {% load static %}
 
 <div class="monitor row">
     <section class="student-sign-in">
 
         <form id="student-field" method="POST" autocomplete="off" class="student-sign-in-form">
-            {% csrf_token %} 
+            {% csrf_token %}
             <div class="id-input">
-            <h1>{{ profile.building }}</h1>
-            {% bootstrap_form arrival_form exclude="destination_id" %}
+                <h1>{{ profile.building }}</h1>
+                {% bootstrap_form arrival_form exclude="destination_id" %}
             </div>
             <input type="hidden" name="arrival">
             <div class="mb-3 notice">
-                <small>*If a student should be in the system, please contact <a href="mailto:leboeufj@worcesterschools.net?subject=HallPass Request - Add student">leboeufj@worcesterschools.net</a> with the name and ID of the student.</small>
+                <small>*If a student should be in the system, please contact <a
+                        href="mailto:leboeufj@worcesterschools.net?subject=HallPass Request - Add student">leboeufj@worcesterschools.net</a>
+                    with the name and ID of the student.</small>
             </div>
             <div class="button-group">
                 {{ field.errors }}
                 {% for queue in destination_data %}
-                    <button name="destination_id" value="{{ queue.destination.id }}" form="student-field" class="btn btn-secondary mx-3" style="background-color: {{ queue.destination.category.color }}; color:{{ queue.destination.category.text_color }}  ">{{ queue.destination.category }}</button>
+                <button name="destination_id" value="{{ queue.destination.id }}" form="student-field"
+                    class="btn btn-secondary mx-3"
+                    style="background-color: {{ queue.destination.category.color }}; color:{{ queue.destination.category.text_color }}  ">
+                    {{ queue.destination.category }}</button>
                 {% endfor %}
             </div>
         </form>
     </section>
 
-    <section class="monitor-destinations" style="grid-template-columns: repeat({{ destination_data|length }}, 350px);"> 
+    <section class="monitor-destinations" style="grid-template-columns: repeat({{ destination_data|length }}, 350px);">
         {% if destination_data %}
-            {% for queue in destination_data %}
-                <aside class="destination">
-                    <div class="destination-heading" style="color: {{ queue.destination.category.color }};"><h2>{{ queue.destination }}</h2>
-                    <div class="labels"><em class="max">Max {{ queue.destination.max_people_allowed }}</em> <br> <em class="in">In {{ queue.people_in }}</em> <br> <em class="waiting">Waiting {{ queue.queue }}</em></div>
-                    <hr>
-                    <section class="destination-body">
-                            {% for log in queue.logs %}
-                                {% if not log.time_in %}
-                                    <div class="destination-log-disabled" >
-                                        <div class="student">{{ log.student_id }}</div> 
-                                        <div class="time-in">Arrival Time: {{ log.Arrival_time|date:"h:i A" }}</div>
-                                        <div class="timer-display"> &nbsp; </div>
-                                        <div class="start-time" hidden>{{ log.arrival_time.isoformat }}</div>
-                                        <footer class="d-flex flex-wrap justify-content-around align-items-end">
-                                            
-                                            <form action="{% url 'time_in' %}" method="POST" class="flex-grow-1 px-1">
-                                                {% csrf_token %}
-                                                <button class="btn btn-primary" style="width:100%" name="log_id" value ="{{ log.id }}" >
-                                                    Time In
-                                                </button>
-                                            </form>
-                                            <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
-                                                {% csrf_token %}
-                                                <button class="btn btn-danger" style="width:100%" name="log_id" value ="{{ log.id }}" >
-                                                    Cancel
-                                                </button>
-                                            </form>
-                                            <form action="{% url 'change_location' %}" method="POST" class="flex-grow-1 px-1 mt-2" style="width:100%">
-                                                {% csrf_token %}
-                                                <div class="input-group">
-                                                    <select class="form-select" id="inputGroupSelect02" name="destination_id">
-                                                        <option selected>Move to...</option>
-                                                        {% for queue in destination_data %}
-                                                        <option value="{{ queue.destination.id }}">{{ queue.destination }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                    <button class="btn btn-secondary" type="submit" name="log_id" value ="{{ log.id }}">Go</button>
-                                                </div>                                            
-                                            </form>
-                                        </footer>
-                                    </div>
-                                {% else %}
-                                    <div class="destination-log" style="background-color: {{ queue.destination.category.color }};">
-                                        <div class="student">{{ log.student_id }}</div> 
-                                        <div class="time-in">Time In: {{ log.time_in|date:"h:i A" }}</div>
-                                        <div class="timer-display"> &nbsp; </div>
-                                        <div class="start-time" hidden>{{ log.time_in|date:'Y-m-d H:i:s'}}</div>
-                                        <footer class="d-flex flex-wrap justify-content-around align-items-end">
-                                            <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
-                                                {% csrf_token %}
-                                                <button class="btn btn-primary" style="width:50%" name="log_id" value ="{{ log.id }}" >
-                                                    Time Out
-                                                </button>
-                                            </form>
-                                            <form action="{% url 'change_location' %}" method="POST" class="flex-grow-1 px-1 mt-2" style="width:100%">
-                                                {% csrf_token %}
-                                                <div class="input-group">
-                                                    <select class="form-select" id="inputGroupSelect02" name="destination_id">
-                                                        <option selected>Move to...</option>
-                                                        {% for queue in destination_data %}
-                                                        <option value="{{ queue.destination.id }}">{{ queue.destination }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                    <button class="btn btn-secondary" type="submit" name="log_id" value ="{{ log.id }}">Go</button>
-                                                </div>                                            
-                                            </form>
-                                        </footer>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                    </section>
-                </aside>
-            {% endfor %}
+        {% for queue in destination_data %}
+        <aside class="destination">
+            <div class="destination-heading" style="color: {{ queue.destination.category.color }};">
+                <h2>{{ queue.destination }}</h2>
+                <div class="labels">
+                    <em class="max">Max {{ queue.destination.max_people_allowed }}</em>
+                    <em class="in">In {{ queue.people_in }}</em>
+                    <em class="waiting">Waiting {{ queue.queue }}</em>
+                </div>
+            </div>
+            <hr>
+            <section class="destination-body">
+                {% for log in queue.logs %}
+                {% if not log.time_in %}
+                <div class="destination-log-disabled">
+                    <div class="student">{{ log.student_id }}</div>
+                    <div class="time-in">Arrival Time: {{ log.Arrival_time|date:"h:i A" }}</div>
+                    <div class="timer-display"> &nbsp; </div>
+                    <div class="start-time" hidden>{{ log.arrival_time.isoformat }}</div>
+                    <footer class="d-flex flex-wrap justify-content-around align-items-end">
+
+                        <form action="{% url 'time_in' %}" method="POST" class="flex-grow-1 px-1">
+                            {% csrf_token %}
+                            <button class="btn btn-primary" style="width:100%" name="log_id" value="{{ log.id }}">
+                                Time In
+                            </button>
+                        </form>
+                        <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" style="width:100%" name="log_id" value="{{ log.id }}">
+                                Cancel
+                            </button>
+                        </form>
+                        <form action="{% url 'change_location' %}" method="POST" class="flex-grow-1 px-1 mt-2"
+                            style="width:100%">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <select class="form-select" id="inputGroupSelect02" name="destination_id">
+                                    <option selected>Move to...</option>
+                                    {% for queue in destination_data %}
+                                    <option value="{{ queue.destination.id }}">{{ queue.destination }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-secondary" type="submit" name="log_id"
+                                    value="{{ log.id }}">Go</button>
+                            </div>
+                        </form>
+                    </footer>
+                </div>
+                {% else %}
+                <div class="destination-log" style="background-color: {{ queue.destination.category.color }};">
+                    <div class="student">{{ log.student_id }}</div>
+                    <div class="time-in">Time In: {{ log.time_in|date:"h:i A" }}</div>
+                    <div class="timer-display"> &nbsp; </div>
+                    <div class="start-time" hidden>{{ log.time_in|date:'Y-m-d H:i:s'}}</div>
+                    <footer class="d-flex flex-wrap justify-content-around align-items-end">
+                        <form action="{% url 'time_out' %}" method="POST" class="flex-grow-1 px-1">
+                            {% csrf_token %}
+                            <button class="btn btn-primary" style="width:50%" name="log_id" value="{{ log.id }}">
+                                Time Out
+                            </button>
+                        </form>
+                        <form action="{% url 'change_location' %}" method="POST" class="flex-grow-1 px-1 mt-2"
+                            style="width:100%">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <select class="form-select" id="inputGroupSelect02" name="destination_id">
+                                    <option selected>Move to...</option>
+                                    {% for queue in destination_data %}
+                                    <option value="{{ queue.destination.id }}">{{ queue.destination }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-secondary" type="submit" name="log_id"
+                                    value="{{ log.id }}">Go</button>
+                            </div>
+                        </form>
+                    </footer>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </section>
+        </aside>
+        {% endfor %}
         {% endif %}
     </section>
 
 </div><!-- /monitor -->
-   
+
 {% block scripts %}
 <script>
     // set focus on arrival form every time
@@ -113,7 +128,7 @@
 
     logs = document.querySelectorAll(".destination-log");
     minutesUntilWarning = 5;
-    setInterval(() => {     
+    setInterval(() => {
         logs.forEach(log => {
 
             let display = log.querySelector(".timer-display");
@@ -124,6 +139,7 @@
 
             if (deltaMilliseconds > 1000 * 60 * minutesUntilWarning && !log.classList.contains('stopwatch-warning')) {
                 log.classList.add('stopwatch-warning');
+                console.log(log)
             }
         })
     }, 10);
@@ -145,23 +161,23 @@
         m = 60 * s;
         h = 60 * m;
         d = 24 * h;
-        conversions = [d,h,m,s];
+        conversions = [d, h, m, s];
         // get the number of days
-        conversions.forEach(t=> {
-            elapsed = Math.floor(milliseconds/t);
-            if(elapsed>0 || time.length>0) {
+        conversions.forEach(t => {
+            elapsed = Math.floor(milliseconds / t);
+            if (elapsed > 0 || time.length > 0) {
                 time.push(elapsed);
                 // remove the time elapsed from milliseconds
                 milliseconds -= elapsed * t
             }
         })
         if (time.length > 1) {
-            return time.map( el => el.toString().padStart(2,'0')).join(':');
+            return time.map(el => el.toString().padStart(2, '0')).join(':');
         }
         if (time.length > 0) {
-            return `:${time[0]?.toString().padStart(2,'0')}`;
+            return `:${time[0]?.toString().padStart(2, '0')}`;
         }
-        return ":00";  
+        return ":00";
     }
 
     /**

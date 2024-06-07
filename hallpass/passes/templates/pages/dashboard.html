@@ -3,34 +3,37 @@
 
 {% block content %}
 <div class="dashboard">
-    <h1> Select Destinations </h1>
+  <h1> Select Destinations </h1>
 
-    <div>
+  <div>
     <form action="" method="post" id="destination-form">
-        {% csrf_token %}
-        <hr>
-        <div>
-          <h2>Building</h2>
-          {% bootstrap_form form exclude='destinations,queue' %}
+      {% csrf_token %}
+      <hr>
+      <div>
+        <h2>Building</h2>
+        {% bootstrap_form form exclude='destinations,queue' %}
+      </div>
+      <hr>
+      <div>
+        <h2>Destinations</h2>
+        {% bootstrap_form form exclude='building,queue' %}
+      </div>
+      <hr>
+      <div class="form-check form-switch">
+        <h2>Queue</h2>
+        <div class="ms-4 p-0">
+          {% bootstrap_form form exclude='building, destinations' %}
+
         </div>
-        <hr>
-        <div >
-          <h2>Destinations</h2>
-          {% bootstrap_form form exclude='building,queue' %}  
-        </div>   
-        <hr>
-        <div class="form-check form-switch" >
-          <h2>Queue</h2>
-          {% bootstrap_form form exclude='building,destinations' %}
-        </div>
-        <hr>
-        <input type='hidden' name='next' value='{{ next }}' >
-        {% buttons %}
-        <button type="submit" class="btn btn-primary">
-          Monitor
-        </button>
-        {% endbuttons %}
-      </form>
+      </div>
+      <hr>
+      <input type='hidden' name='next' value='{{ next }}'>
+      {% buttons %}
+      <button type="submit" class="btn btn-primary">
+        Monitor
+      </button>
+      {% endbuttons %}
+    </form>
   </div>
 </div>
 
