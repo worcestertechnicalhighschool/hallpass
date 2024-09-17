@@ -34,6 +34,7 @@ if not bool(envget) and not DEBUG:
     raise Exception("SECRET_KEY environment variable not defined in production!")
 
 ALLOWED_HOSTS = [
+    "*",
     "127.0.0.1",
     "localhost",
     "www.hallpass.tech",
